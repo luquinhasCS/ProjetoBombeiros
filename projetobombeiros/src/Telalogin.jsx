@@ -1,6 +1,8 @@
 import "./css/Telalogin.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import noarlogo from './imgs/noarlogo.png'
+import Button from './utils/Button'
+
 function Telalogin() {
     return (
         <div className="row col-md-12" style={{ height: "100%" }}>
@@ -19,9 +21,7 @@ function Telalogin() {
                         </form>
                     </div>
                 </div>
-                <div className="col-md-12 d-flex justify-content-center">
-                    <button class="btn btn-primary" type="button">Entrar</button>
-                </div>
+                <Button name="Entrar"/>
                 <div className="col-md-12" style={{position:"absolute", bottom:"20px", left:"20px"}}>
                     <a href="" className="text-muted" style={{ textDecoration: "none" }}>Esqueci minha senha</a>
                 </div>
