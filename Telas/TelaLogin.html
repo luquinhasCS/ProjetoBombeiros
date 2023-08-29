@@ -9,81 +9,13 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@100;200;300;500;800&display=swap" rel="stylesheet">
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: Kanit;
-        }
-
-        .left-column {
-            background-color: #fff;
-            padding: 20px;
-            text-align: center;
-        }
-
-        .right-column {
-            background-color: #223366;
-            color: #fff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .login-heading {
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
-
-        .input-field {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 0;
-            border-bottom: solid 1px #cfcfcf;
-        }
-
-        .input-field:focus {
-            outline: 0;
-            box-shadow: 0 0 0 0;
-            border-bottom: 2px solid #1a2759;
-        }
-
-        .form-control {
-            border-radius: 0;
-        }
-
-        .login-button {
-            width: 50%;
-            padding: 10px;
-            background-color: #223366;
-            color: #fff;
-            border: none;
-            border-radius: 100vh;
-            cursor: pointer;
-        }
-
-        .login-button:hover {
-            background-color: #1a2759;
-        }
-
-        .forgot-password {
-            margin-top: 10px;
-            color: #223366;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .sumir {
-            display: none !important;
-        }
-    </style>
+<link rel="stylesheet" href="../style.css">
 </head>
 
 <body>
     <div class="container-fluid">
         <div class="row" style="height: 100vh;">
-            <div class="col-md-4 left-column d-flex flex-column justify-content-between">
+            <div class="col-md-4 left-column d-flex flex-column justify-content-between" style="margin-top:100px">
                 <h1 class="login-heading">Faça login</h1>
                 <div>
                 <div class="text-center">
@@ -98,7 +30,7 @@
                 </div>
             </div>
             <div class="col-md-8 right-column d-flex justify-content-center align-items-center" id="sumir">
-                <img src="logo_grande.png" alt="" width="450">
+                <img src="../imgs/logo_grande.png" alt="" width="450">
             </div>
         </div>
     </div>

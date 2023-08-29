@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Projeto Bombeiros</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@100;200;300;500;800&display=swap"
+            rel="stylesheet">
+        <link rel="stylesheet" href="../style.css">
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    </head>
+</head>
+
+<body>
+    <div class="alert alert-danger" id="danger-alert">
+        Você deve preencher todos os campos
+    </div>
+    <div class="col-md-12 d-flex justify-content-center align-items-center" style="height:100vh">
+        <div class="col-md-9">
+            <h1>Fazer cadastro</h1>
+            <form class="mt-5" id="f_cadastro">
+                <div class="col-md-12">
+                    <div class="form-floating">
+                        <input type="email" class="form-control" id="f_email" name="f_email" placeholder="Email">
+                        <label for="f_email" class="form-label">Email</label>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-floating">
+                        <input type="password" class="form-control" id="f_password" name="f_password"
+                            placeholder="Senha">
+                        <label for="f_senha" class="form-label">Senha</label>
+                    </div>
+                </div>
+                <div class="col-md-12 mb-3">
+                    <div class="row">
+                        <div class="col-md-6 form-floating">
+                            <input type="text" class="form-control" id="f_username" name="f_username"
+                                placeholder="Nome" >
+                            <label for="f_senha" class="form-label">Nome</label>
+                        </div>
+                        <div class="col-md-6 form-floating">
+                            <input type="text" class="form-control" id="f_telefone" name="f_telefone"
+                                placeholder="Telefone">
+                            <label for="f_telefone" class="form-label">Telefone</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 mb-3">
+                    <div class="row ">
+                        <div class="col-md-6 form-floating">
+                            <input type="text" class="form-control" id="f_cpf" name="f_cpf" placeholder="CPF">
+                            <label for="f_cpf" class="form-label">CPF</label>
+                        </div>
+                        <div class="col-md-6 form-floating">
+                            <input type="text" class="form-control" id="f_sexo" name="f_sexo" placeholder="Sexo">
+                            <label for="f_sexo" class="form-label">Sexo</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="d-flex justify-content-end">
+                        <button type="submit" class="btn btn-primary login-button mt-5">Cadastrar</button>
+                    </div>
+            </form>
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+    $(function () {
+        $(".alert").hide()
+        $("#f_cadastro").submit(function (event) {
+            event.preventDefault();
+            var dados = $(this).serialize();
+            var inputsVazios = $(this).find(":input").filter(function () {
+                return $(this).val() === "";
+            });
+            var body = $('body')
+            if (inputsVazios.length > 0) {
+                for(var i = 0; i < inputsVazios.length - 1; i++){
+                    inputsVazios[i].style.backgroundColor= "#ff2e43"
+                    inputsVazios[i].style.borderRadius= "10px"
+                    sleep(2000)
+                        inputsVazios[i].style.backgroundColor= "none"
+                    inputsVazios[i].style.borderRadius= "none"
+                }
+            }
+            else {
+                $.ajax({
+                    type: "POST",
+                    url: "bombeiroCadastro.php",
+                    data: dados,
+                    dataType: 'json',
+
+                    error: function (xhr, status, error) {
+                        // Aqui poderíamos preencher uma <div> com o innerHTML por exemplo
+                        console.error('Ocorreu um erro ao enviar os dados: ' + error);
+                    }
+                });
+            };
+        });
+    });
+
+</script>
+
+</html>
