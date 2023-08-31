@@ -85,22 +85,19 @@
                 return $(this).val() === "";
             });
             var body = $('body')
-            if (inputsVazios.length > 0) {
+            if ((inputsVazios.length - 1) > 0) {
                 for(var i = 0; i < inputsVazios.length - 1; i++){
                     inputsVazios[i].style.backgroundColor= "#ff2e43"
                     inputsVazios[i].style.borderRadius= "10px"
-                    
                 }
             }
             else {
                 $.ajax({
                     type: "POST",
-                    url: "bombeiroCadastro.php",
+                    url: "../php/bombeiroCadastro.php",
                     data: dados,
                     dataType: 'json',
-
                     error: function (xhr, status, error) {
-                        // Aqui poderíamos preencher uma <div> com o innerHTML por exemplo
                         console.error('Ocorreu um erro ao enviar os dados: ' + error);
                     }
                 });

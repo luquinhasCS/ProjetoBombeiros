@@ -10,8 +10,8 @@ $hashedPassword = md5($password);
 
 $userData = $db -> select(
     $table = "bombeiro",
-    $condition = "bombeiro.email = :email",
-    $params = array(':email' => $email)
+    $select = "*",
+    $condition = "bombeiro.email = '$email'"
 );
 
 $db -> close();
@@ -19,17 +19,16 @@ $db -> close();
 if (!empty($userData)) {
     $storedHashedPassword = $userData[0]['password'];
 
-    if (password_verify($hashedPassword, $storedHashedPassword)) {
-        echo "O login foi bem sucedido.";
+    if ( $hashedPassword === $storedHashedPassword) {
         $idBombeiro = $userData[0]['id'];
         $_SESSION["logado"] = $idBombeiro;
-        header("Location: ../telas/tela");
-        exit();
+        echo '{"res": 2}';
+
     } else {
-        echo "0"
+        echo '{"res": 0}';
     }
 } else {
-    echo "1"
+    echo '{"res": 1}';
 }
 
 ?>

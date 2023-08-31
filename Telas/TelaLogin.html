@@ -7,27 +7,35 @@
     <title>Projeto Bombeiros</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@100;200;300;500;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@100;200;300;500;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
 </head>
 
 <body>
     <div class="container-fluid">
         <div class="row" style="height: 100vh;">
             <div class="col-md-4 left-column d-flex flex-column justify-content-between" style="margin-top:100px">
-                <h1 class="login-heading">Faça login</h1>
-                <div>
-                <div class="text-center">
-                    <input class="form-control input-field" type="email" placeholder="Email">
-                    <input class="form-control input-field" type="password" placeholder="Senha">
-                </div>
-                <div class="text-center" style="margin-top: 5em">
-                    <button class="btn btn-primary login-button">Entrar</button>
-                </div></div>
-                <div style="text-align: left;">
-                    <a class="forgot-password" href="#">Esqueci minha senha</a>
-                </div>
+                <form id="f_login">
+
+                    <h1 class="login-heading">Faça login</h1>
+                    <div>
+                        <div class="text-center">
+
+                            <input class="form-control input-field" type="email" placeholder="Email"
+                                required="required" name="f_email">
+                            <input class="form-control input-field" type="password" placeholder="Senha"
+                                required="required" name="f_password">
+                        </div>
+                        <div class="text-center" style="margin-top: 5em">
+                            <button class="btn btn-primary login-button" type="submit">Entrar</button>
+                        </div>
+                    </div>
+                    <div style="text-align: left;">
+                        <a class="forgot-password" href="#">Esqueci minha senha</a>
+                    </div>
+                </form>
+
             </div>
             <div class="col-md-8 right-column d-flex justify-content-center align-items-center" id="sumir">
                 <img src="../imgs/logo_grande.png" alt="" width="450">
@@ -38,14 +46,38 @@
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"
     integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
 <script>
-    $(window).on("resize", function () {
-        var img = $("#sumir")
-        if ($(window).width() <= 767) {
-            img.addClass("sumir")
-        }
-        else {
-            img.removeClass("sumir")
-        }
+    $(function () {
+        $(window).on("resize", function () {
+            var img = $("#sumir")
+            if ($(window).width() <= 767) {
+                img.addClass("sumir")
+            }
+            else {
+                img.removeClass("sumir")
+            }
+        });
+        $("#f_login").submit(function (event) {
+            event.preventDefault()
+            var dados = $(this).serialize();
+            $.ajax({
+                type: "POST",
+                url: "../php/bombeiroLogin.php",
+                data: dados,
+                dataType: 'json',
+                success: function(callback){
+                    var res = callback.res
+                    const erros = ["Senha incorreta", "Email incorreto"]
+                    if (res != 2){
+                        alert(erros[res])
+                    } else {
+                        window.open("../telas/telaPrincipal.html", "_self")
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error('Ocorreu um erro ao enviar os dados: ' + error);
+                }
+            });
+        });
     })
 
 </script>
