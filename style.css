@@ -2,6 +2,7 @@ body {
     margin: 0;
     padding: 0;
     font-family: Kanit;
+    box-sizing: border-box;
 }
 
 .left-column {
@@ -23,18 +24,32 @@ body {
     margin-bottom: 20px;
 }
 
-input {
+input:not([type="checkbox"]),
+select {
     width: 100% !important;
     margin-bottom: 10px !important;
     border: 0 !important;
     border-bottom: solid 1px #cfcfcf !important;
 }
 
-input:focus {
+input:not([type="checkbox"]):focus {
     outline: 0 !important;
     box-shadow: 0 0 0 0 !important;
     border-bottom: 2px solid #1a2759 !important;
 }
+
+select:required:invalid {
+    color: gray;
+}
+
+option[value=""][disabled] {
+    display: none;
+}
+
+option {
+    color: black;
+}
+
 .form-control {
     border-radius: 0;
 }
@@ -46,7 +61,7 @@ input:focus {
     border: none;
     border-radius: 100vh;
     cursor: pointer;
-    width:fit-content;
+    width: fit-content;
 }
 
 .login-button:hover {
@@ -62,4 +77,35 @@ input:focus {
 
 .sumir {
     display: none !important;
+}
+
+.nav {
+    background-color: #33338D;
+    position: relative;
+    height: 85px;
+}
+
+.nav-img {
+    width: 150px;
+    position: absolute;
+    top: 15px
+}
+
+.nav-title {
+    color: #fff;
+    margin-left: 160px;
+}
+
+@media (max-width: 500px) {
+    .nav-title {
+        margin-left: 10px;
+    }
+}
+
+.btn-primary {
+    background-color: #33338D !important;
+    border: 0
+}
+.btn {
+    padding-inline: 4.5em;
 }
