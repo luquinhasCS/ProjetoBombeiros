@@ -230,7 +230,7 @@
         $(".coluna-botoes").on("click", function(e){
             var element = e.target
             var idElement = $(element).attr('id')
-            console.log(idElement)
+            console.log(idElement.replace("f_button", ""))
             $(element).css("border", "10px solid green")
         })
     })
