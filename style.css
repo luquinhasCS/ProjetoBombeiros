@@ -24,6 +24,10 @@ body {
     margin-bottom: 20px;
 }
 
+/* .col-xl-12 input, .col-xl-12 select{
+    font-size:10px
+} */
+
 input:not([type="checkbox"]),
 select {
     width: 100% !important;
@@ -105,10 +109,48 @@ option {
 .btn-primary {
     background-color: #33338D !important;
     border: 0;
-    
+
 }
-.btn {
-    padding-inline: 4.5em;
-    margin-left: 80px;
-    margin-top: 50px;
+
+.coluna-botoes {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1.5em;
 }
+
+.coluna-botoes>button {
+    width: 300px;
+}
+
+div:has(.coluna-botoes)::-webkit-scrollbar {
+    width: 6px;
+}
+div:has(.coluna-botoes)::-webkit-scrollbar-thumb {
+    background-color: blue;
+    border-radius: 20px;
+}
+
+.hamburger{
+    background:none;
+    line-height:45px;
+    padding:5px 15px 0px 15px;
+    color:#999;
+    border:0;
+    font-size:1.4em;
+    font-weight:bold;
+    cursor:pointer;
+    outline:none;
+    z-index:10000000000000;
+  }
+  .cross{
+    background:none;
+    padding:7px 15px 0px 15px;
+    color:#999;
+    border:0;
+    font-size:3em;
+    line-height:65px;
+    font-weight:bold;
+    cursor:pointer;
+    outline:none;
+    z-index:10000000000000;
+  }

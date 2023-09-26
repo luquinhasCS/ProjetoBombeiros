@@ -28,8 +28,8 @@
         </div>
     </nav>
 
-    <div class="col-md-12 container-fluid d-flex justify-content-center mt-4">
-        <div class="col-md-9 row">
+    <!-- <div class="col-xl-12 container-fluid d-flex justify-content-center mt-4">
+        <div class="col-lg-9 row">
             <div class="col-md-8">
                 <div class="col-md-12 row">
                     <div class="col-md-3">
@@ -102,9 +102,11 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
     <div class="col-md-12">
-        <div class="col-md-3 d-flex flex-column" style="max-height:200px">
+    <button class="hamburger">&#9776;</button>
+  <button class="cross">&#735;</button>
+        <div class="col-md-3 d-flex flex-column mt-4" style="height:480px; overflow:hidden; overflow-y:auto">
     <?php
     require '../php/Db.php';
 
@@ -122,9 +124,9 @@
             $buttonLabel = $row['label'];
             $buttonPage = $row['page'];
 
-            echo('<button id="f_button'. $buttonId .'" type="button" class="btn btn-primary rounded-pill" data-bs-toggle="modal" data-bs-target="#modaltipoocorencia">
+            echo('<div class="coluna-botoes"><button id="f_button'. $buttonId .'" type="button" class="btn btn-primary rounded-pill">
                 '. $buttonLabel .'
-                </button>'
+                </button> </div>'
                 );
         }
     }
@@ -185,14 +187,13 @@
     $(function () {
         var img = $(".nav-img")
 
-        if ($(window).width() <= 768) {
-            img.addClass("sumir")
-        }
         $(window).on("resize", function () {
-            if ($(window).width() <= 768) {
+            if ($(window).width() <= 1024) {
                 img.addClass("sumir")
+                $(".nav-title").css("margin", "auto")
             }
             else {
+                $(".nav-title").css("margin", "")
                 img.removeClass("sumir")
             }
         });
@@ -211,6 +212,26 @@
                           "<td>" + face + "</td>"+  
                           "<td>" + tipo + "</td>"+  
                          "</tr>")
+        })
+
+        $( ".cross" ).hide();
+        $( ".coluna-botoes" ).hide();
+        $( ".hamburger" ).click(function() {
+            $( ".coluna-botoes" ).show()
+            $( ".hamburger" ).hide();
+            $( ".cross" ).show();
+        });
+
+        $( ".cross" ).click(function() {
+            $( ".coluna-botoes" ).hide()
+            $( ".cross" ).hide();
+            $( ".hamburger" ).show();
+        });
+        $(".coluna-botoes").on("click", function(e){
+            var element = e.target
+            var idElement = $(element).attr('id')
+            console.log(idElement)
+            $(element).css("border", "10px solid green")
         })
     })
 
