@@ -222,9 +222,12 @@
         });
         $(".coluna-botoes").on("click", function(e){
             var element = e.target
+            var selectedButton = $(".button-show")
+            $(selectedButton).removeClass("button-show")
+            $(element).addClass("button-show")
+            console.log(selectedButton)
             var idElement = $(element).attr('id').replace("f_button", "")
             handleButtonClick(idElement)
-            $(element).css("border", "10px solid green")
         })
     })
     function handleButtonClick(buttonId) {

@@ -122,6 +122,10 @@ option {
     width: 300px;
 }
 
+.button-show{
+    outline: 3px solid green !important;
+}
+
 div:has(.coluna-botoes)::-webkit-scrollbar {
     width: 6px;
 }
