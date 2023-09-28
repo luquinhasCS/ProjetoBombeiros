@@ -108,77 +108,87 @@
   <button class="cross">&#735;</button>
         <div class="col-md-3 d-flex flex-column mt-4" style="height:480px; overflow:hidden; overflow-y:auto">
     <?php
-    require '../php/Db.php';
+        require '../php/Db.php';
+        $db = new db();
 
-    $db = new Db();
+        $buttons = $db->select(
+            $table = "botao",
+            $select = "*",
+            $condition = ""
+        );
 
-    $form_structure = $db->select(
-        $table = "botao",
-        $select = "*",
-        $condition = ""
-    );
+        if ($buttons) {
+            foreach ($buttons as $button) {
+                $buttonId = $button['id'];
+                $buttonLabel = $button['label'];
+                $buttonPage = $button['page'];
 
-    if ($form_structure) {
-        foreach ($form_structure as $row) {
-            $buttonId = $row['id'];
-            $buttonLabel = $row['label'];
-            $buttonPage = $row['page'];
-
-            echo('<div class="coluna-botoes"><button id="f_button'. $buttonId .'" type="button" class="btn btn-primary rounded-pill">
-                '. $buttonLabel .'
-                </button> </div>'
-                );
+                echo('<div class="coluna-botoes"><button id="f_button'. $buttonId .'" type="button" class="btn btn-primary rounded-pill">
+                    '. $buttonLabel .'
+                    </button> </div>'
+                    );
+            }
         }
-    }
+
+        $db -> close();
     ?>
     </div>
     <div class="col-md-9 row">
-    <!-- <div class="col-md-6"></div>
-    <div class="col-md-6"></div> -->
-    <?php                        
-                        // $buttonId = 1
 
-                        // $db = new db();
+    <?php
+        $db = new db();
+        echo("<script>console.log('sexo2')</script>");
 
-                        // $form_structure = $db -> select(
-                        //     $table = "form_structure",
-                        //     $select = "*",
-                        //     $condition = "form_structure.parent_id = '$buttonId'"
-                        // );
+        if(isset($_POST['buttonId'])){
+            $clickedButtonId = $_POST['buttonId'];
+            
+            echo("<script>console.log(sexo1)</script>");
 
-                        // if ($form_structure){
-                        //     foreach ($form_structure as $row){
-                        //         switch ($rows["data_type"]) {
-                        //             $inputId = $rows['id']
-                        //             $label = $rows["label"]
-                        //             case 1:
-                        //                 echo '<div class="form-check">
-                        //                           <input class="form-check-input" type="checkbox" value="" id="f_checkbox'. $inputId .'">
-                        //                           <label class="form-check-label" for="f_checkbox'. $inputId .'">
-                        //                           '. $label .'
-                        //                           </label>
-                        //                       </div>'
-                        //                 break;
-                        //             case 2:
-                        //                 //table data php process
-                        //                 // echo table input html
-                        //                 break;
-                        //             case 3:
-                        //                 echo '<div class="form-check">
-                        //                           <input class="form-check-input" type="checkbox" value="" id="f_checkbox'. $inputId .'">
-                        //                           <label class="form-check-label" for="f_checkbox'. $inputId .'">
-                        //                           Outros: 
-                        //                           </label>
-                        //                           <input class="form-control" type="text" value="">
-                        //                       </div>'
-                        //                 break;
-                        //             case 4:
-                        //                 // especial modal
-                        //                 break;
-                        //         }   
-                        //     }
-                        // }
-                        // ?> 
+            $form_structure = $db->select(
+                $table = "form_structure",
+                $select = "*",
+                $condition = "form_structure.parent_id = '$clickedButtonId'"
+            );
+        
+            if ($form_structure) {
+                foreach ($form_structure as $row) {
+                    $inputId = $row['id'];
+                    $label = $row["label"];
+                    switch ($row["data_type"]) {
+                        case 1:
+                            echo(
+                                '<div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="f_checkbox'. $inputId .'">
+                                    <label class="form-check-label" for="f_checkbox'. $inputId .'">
+                                    '. $label .'
+                                    </label>
+                                </div>'
+                            );
+                            break;
+                        case 2:
+                            //table data php process
+                            // echo table input HTML
+                            break;
+                        case 3:
+                            echo(
+                                '<div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="f_checkbox'. $inputId .'">
+                                    <label class="form-check-label" for="f_checkbox'. $inputId .'">
+                                    Outros: 
+                                    </label>
+                                    <input class="form-control" type="text" value="">
+                                </div>'
+                            );
+                            break;
+                        case 4:
+                            // especial modal
+                            break;
+                    }
+                }
+            }
+            $db->close();
+        }
+    ?>
     </div>
     </div>
 </body>
@@ -197,23 +207,6 @@
                 img.removeClass("sumir")
             }
         });
-
-        var tbody = $(".table > tbody")
-        var local = $("#local").val()
-        var lado = $("#lado").val()
-        var face = $("#face").val()
-        var tipo = $("#tipo").val()
-        var button = $("#inserir")
-
-        $(button).on("click", function(){
-            tbody.append("<tr>" +
-                          "<td>" + local + "</td>"+  
-                          "<td>" + lado + "</td>"+  
-                          "<td>" + face + "</td>"+  
-                          "<td>" + tipo + "</td>"+  
-                         "</tr>")
-        })
-
         $( ".cross" ).hide();
         $( ".coluna-botoes" ).hide();
         $( ".hamburger" ).click(function() {
@@ -229,13 +222,23 @@
         });
         $(".coluna-botoes").on("click", function(e){
             var element = e.target
-            var idElement = $(element).attr('id')
-            console.log(idElement.replace("f_button", ""))
+            var idElement = $(element).attr('id').replace("f_button", "")
+            handleButtonClick(idElement)
             $(element).css("border", "10px solid green")
         })
     })
+    function handleButtonClick(buttonId) {
+        $.ajax({
+            type: "POST",
+            url: "telaPrincipal.php",
+            data: { buttonId: buttonId },
+            success: function(response) {
 
+            },
+            error: function(error) {
+                console.error(error);
+            }
+        });
+    }
 </script>
-
 </html>
-
