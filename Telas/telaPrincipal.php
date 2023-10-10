@@ -23,182 +23,104 @@
 <body>
     <nav class="nav navbar">
         <div class="container-fluid">
+            <button class="hamburger">&#9776;</button>
             <img class="nav-img" src="../imgs/logo_pequena.png">
             <h1 class="nav-title">Bombeiros Voluntários</h1>
         </div>
     </nav>
+    <div class="col-md-12" id="principal">
+        <div class="col-lg-3 d-flex flex-column ps-3 pt-1" style="margin-top: 5rem!important; height:550px; overflow:hidden; overflow-y:auto">
+            <?php
+                require '../php/Db.php';
+                $db = new db();
 
-    <!-- <div class="col-xl-12 container-fluid d-flex justify-content-center mt-4">
-        <div class="col-lg-9 row">
-            <div class="col-md-8">
-                <div class="col-md-12 row">
-                    <div class="col-md-3">
-                        <input type="text" placeholder="Nome">
-                    </div>
-                    <div class="col-md-2">
-                        <select name="" id="" required>
-                            <option value="">Sexo</option>
-                            <option value="M">Masculino</option>
-                            <option value="F">Feminino</option>
-                        </select>
-                    </div>
-                    <div class="col-md-2">
-                        <input type="text" placeholder="Idade">
-                    </div>
-                    <div class="col-md-5">
-                        <input type="text" placeholder="Hospital">
-                    </div>
-                </div>
-                <div class="col-md-12 row">
-                    <div class="col-md-3">
-                        <input type="text" placeholder="Telefone">
-                    </div>
-                    <div class="col-md-4">
-                        <input type="text" placeholder="Acompanhante">
-                    </div>
-                    <div class="col-md-2">
-                        <input type="text" placeholder="Idade">
-                    </div>
-                    <div class="col-md-3">
-                        <input type="text" placeholder="RG/CPF Paciente">
-                    </div>
-                </div>
-                <div class="col-md-12 row">
-                    <div class="col-md-5">
-                        <input type="text" placeholder="Local da ocorrência">
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="col-md-12 row">
-                    <div class="col-md-4">
-                        <input type="text" placeholder="N° USB">
-                    </div>
-                    <div class="col-md-4">
-                        <input type="text" placeholder="N° Ocorr">
-                    </div>
-                    <div class="col-md-4">
-                        <input type="text" placeholder="Cód. SIA/SUS">
-                    </div>
-                </div>
-                <div class="col-md-12 row">
-                    <div class="col-md-3">
-                        <input type="text" placeholder="Cód. IR">
-                    </div>
-                    <div class="col-md-3">
-                        <input type="text" placeholder="Cód. PS">
-                    </div>
-                    <div class="col-md-3">
-                        <input type="text" placeholder="H.CH">
-                    </div>
-                    <div class="col-md-3">
-                        <input type="text" placeholder="Km final">
-                    </div>
-                </div>
-                <div class="col-md-12 row">
-                    <div class="col-md-6">
-                        <input type="text" placeholder="Despachante">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> -->
-    <div class="col-md-12">
-    <button class="hamburger">&#9776;</button>
-  <button class="cross">&#735;</button>
-        <div class="col-md-3 d-flex flex-column mt-4" style="height:480px; overflow:hidden; overflow-y:auto">
-    <?php
-        require '../php/Db.php';
-        $db = new db();
+                $buttons = $db->select(
+                    $table = "botao",
+                    $select = "*",
+                    $condition = ""
+                );
 
-        $buttons = $db->select(
-            $table = "botao",
-            $select = "*",
-            $condition = ""
-        );
+                if ($buttons) {
+                    foreach ($buttons as $button) {
+                        $buttonId = $button['id'];
+                        $buttonLabel = $button['label'];
+                        $buttonPage = $button['page'];
 
-        if ($buttons) {
-            foreach ($buttons as $button) {
-                $buttonId = $button['id'];
-                $buttonLabel = $button['label'];
-                $buttonPage = $button['page'];
-
-                echo('<div class="coluna-botoes"><button id="f_button'. $buttonId .'" type="button" class="btn btn-primary rounded-pill">
-                    '. $buttonLabel .'
-                    </button> </div>'
-                    );
-            }
-        }
-
-        $db -> close();
-    ?>
-    </div>
-    <div class="col-md-9 row">
-
-    <?php
-        $db = new db();
-        echo("<script>console.log('sexo2')</script>");
-
-        if(isset($_POST['buttonId'])){
-            $clickedButtonId = $_POST['buttonId'];
-            
-            echo("<script>console.log(sexo1)</script>");
-
-            $form_structure = $db->select(
-                $table = "form_structure",
-                $select = "*",
-                $condition = "form_structure.parent_id = '$clickedButtonId'"
-            );
-        
-            if ($form_structure) {
-                foreach ($form_structure as $row) {
-                    $inputId = $row['id'];
-                    $label = $row["label"];
-                    switch ($row["data_type"]) {
-                        case 1:
-                            echo(
-                                '<div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="f_checkbox'. $inputId .'">
-                                    <label class="form-check-label" for="f_checkbox'. $inputId .'">
-                                    '. $label .'
-                                    </label>
-                                </div>'
+                        echo('<div class="coluna-botoes"><button id="f_button'. $buttonId .'" type="button" class="btn btn-primary rounded-pill">
+                            '. $buttonLabel .'
+                            </button> </div>'
                             );
-                            break;
-                        case 2:
-                            //table data php process
-                            // echo table input HTML
-                            break;
-                        case 3:
-                            echo(
-                                '<div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="f_checkbox'. $inputId .'">
-                                    <label class="form-check-label" for="f_checkbox'. $inputId .'">
-                                    Outros: 
-                                    </label>
-                                    <input class="form-control" type="text" value="">
-                                </div>'
-                            );
-                            break;
-                        case 4:
-                            // especial modal
-                            break;
                     }
                 }
+
+                $db -> close();
+            ?>
+        </div>
+        <div class="col-md-9 row">
+
+        <?php
+            $db = new db();
+
+            if(isset($_POST['buttonId'])){
+                $clickedButtonId = $_POST['buttonId'];
+                
+                echo("<script>console.log(sexo1)</script>");
+
+                $form_structure = $db->select(
+                    $table = "form_structure",
+                    $select = "*",
+                    $condition = "form_structure.parent_id = '$clickedButtonId'"
+                );
+            
+                if ($form_structure) {
+                    foreach ($form_structure as $row) {
+                        $inputId = $row['id'];
+                        $label = $row["label"];
+                        switch ($row["data_type"]) {
+                            case 1:
+                                echo(
+                                    '<div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="f_checkbox'. $inputId .'">
+                                        <label class="form-check-label" for="f_checkbox'. $inputId .'">
+                                        '. $label .'
+                                        </label>
+                                    </div>'
+                                );
+                                break;
+                            case 2:
+                                //table data php process
+                                // echo table input HTML
+                                break;
+                            case 3:
+                                echo(
+                                    '<div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="f_checkbox'. $inputId .'">
+                                        <label class="form-check-label" for="f_checkbox'. $inputId .'">
+                                        Outros: 
+                                        </label>
+                                        <input class="form-control" type="text" value="">
+                                    </div>'
+                                );
+                                break;
+                            case 4:
+                                // especial modal
+                                break;
+                        }
+                    }
+                }
+                $db->close();
             }
-            $db->close();
-        }
-    ?>
-    </div>
+        ?>
+        </div>
     </div>
 </body>
 
 <script>
     $(function () {
         var img = $(".nav-img")
-
+        $( ".hamburger" ).hide();
         $(window).on("resize", function () {
-            if ($(window).width() <= 1024) {
+            if ($(window).width() <= 992) {
                 img.addClass("sumir")
                 $(".nav-title").css("margin", "auto")
             }
@@ -207,26 +129,29 @@
                 img.removeClass("sumir")
             }
         });
-        $( ".cross" ).hide();
-        $( ".coluna-botoes" ).hide();
-        $( ".hamburger" ).click(function() {
-            $( ".coluna-botoes" ).show()
-            $( ".hamburger" ).hide();
-            $( ".cross" ).show();
-        });
+        var parent = $(".coluna-botoes").first().parent()
+        $(window).on("resize", function () {
+            if ($(window).width() <= 992) {
+                $(parent).css("margin-top", "1rem")
+                $(".coluna-botoes").hide()
+                $(".hamburger").show()
+            } else {
+                $(".coluna-botoes").show()
+                $(".hamburger").hide()
+                $(parent).css("margin-top", "5rem")
+            }
+        })
+        $(".hamburger").on("click", function(){
+            $(".coluna-botoes").show()
+        })
 
-        $( ".cross" ).click(function() {
-            $( ".coluna-botoes" ).hide()
-            $( ".cross" ).hide();
-            $( ".hamburger" ).show();
-        });
-        $(".coluna-botoes").on("click", function(e){
+        $(".coluna-botoes > button").on("click", function(e){
             var element = e.target
             var selectedButton = $(".button-show")
             $(selectedButton).removeClass("button-show")
             $(element).addClass("button-show")
-            console.log(selectedButton)
             var idElement = $(element).attr('id').replace("f_button", "")
+            console.log(idElement)
             handleButtonClick(idElement)
         })
     })
