@@ -28,7 +28,7 @@
             <h1 class="nav-title">Bombeiros Voluntários</h1>
         </div>
     </nav>
-    <div class="col-md-12" id="principal">
+    <div class="col-md-12 row" id="principal">
         <div class="col-lg-3 d-flex flex-column ps-3 pt-1" style="margin-top: 5rem!important; height:550px; overflow:hidden; overflow-y:auto">
             <?php
                 require '../php/Db.php';
@@ -90,6 +90,7 @@
         })
         $(".hamburger").on("click", function(){
             $(".coluna-botoes").show()
+            $(".coluna-botoes").first().parent().addClass("d-flex")
         })
 
         $(".coluna-botoes > button").on("click", function(e){
@@ -97,15 +98,17 @@
             var selectedButton = $(".button-show")
             $(selectedButton).removeClass("button-show")
             $(element).addClass("button-show")
+            $(".coluna-botoes").first().parent().removeClass("d-flex")
+            $(".coluna-botoes").first().parent().hide()
             var idElement = $(element).attr('id').replace("f_button", "")
             updateIframe(idElement)
 
         })
         function updateIframe(buttonId) {
-        var iframe = document.getElementById("form");
-        var url = "../php/generateForm.php?buttonId=" + buttonId;
-        iframe.src = url;
-    }
+            var iframe = document.getElementById("form");
+            var url = "../php/generateForm.php?buttonId=" + buttonId;
+            iframe.src = url;
+        }
     })
 </script>
 </html>
