@@ -20,15 +20,18 @@
         integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
 </head>
 
-<body>
+<body style="overflow:hidden">
     <nav class="nav navbar">
         <div class="container-fluid">
             <button class="hamburger">&#9776;</button>
             <img class="nav-img" src="../imgs/logo_pequena.png">
             <h1 class="nav-title">Bombeiros Voluntários</h1>
+            <div class="col-md-2" style="height:20px">
+                <button class="btn btn-primary rounded-pill" id="f_voltar">Voltar</button>
+            </div>
         </div>
     </nav>
-    <div class="col-md-12 row" id="principal">
+    <div class="col-md-12" id="principal">
         <div class="col-lg-3 d-flex flex-column ps-3 pt-1" style="margin-top: 5rem!important; height:550px; overflow:hidden; overflow-y:auto">
             <?php
                 require '../php/Db.php';
@@ -56,8 +59,12 @@
                 $db -> close();
             ?>
         </div>
-        <div class="col-md-9 row">
+        <div class="col-md-12" style="margin-top:6rem">
+        
+            <div class="col-md-12">   
             <iframe id="form" frameborder="0"></iframe>
+            </div>
+            
         </div>
     </div>
 </body>
@@ -66,6 +73,7 @@
     $(function () {
         var img = $(".nav-img")
         $( ".hamburger" ).hide();
+        $( "#f_voltar" ).hide();
         $(window).on("resize", function () {
             if ($(window).width() <= 992) {
                 img.addClass("sumir")
@@ -93,6 +101,13 @@
             $(".coluna-botoes").first().parent().addClass("d-flex")
         })
 
+        $("#f_voltar").on("click", function(){
+            $(".coluna-botoes").show()
+            $(".coluna-botoes").first().parent().addClass("d-flex")
+            $(this).hide();
+            $("#form").hide()
+        })
+
         $(".coluna-botoes > button").on("click", function(e){
             var element = e.target
             var selectedButton = $(".button-show")
@@ -100,12 +115,14 @@
             $(element).addClass("button-show")
             $(".coluna-botoes").first().parent().removeClass("d-flex")
             $(".coluna-botoes").first().parent().hide()
+            $( "#f_voltar" ).show();
             var idElement = $(element).attr('id').replace("f_button", "")
             updateIframe(idElement)
 
         })
         function updateIframe(buttonId) {
             var iframe = document.getElementById("form");
+            $(iframe).show()
             var url = "../php/generateForm.php?buttonId=" + buttonId;
             iframe.src = url;
         }

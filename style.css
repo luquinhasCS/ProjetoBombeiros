@@ -83,7 +83,7 @@ option {
     display: none !important;
 }
 
-.nav {
+.nav:has(.container-fluid) {
     background-color: #33338D;
     position: relative;
     height: 85px;
