@@ -26,8 +26,8 @@
             <button class="hamburger">&#9776;</button>
             <img class="nav-img" src="../imgs/logo_pequena.png">
             <h1 class="nav-title">Bombeiros Voluntários</h1>
-            <div class="col-md-2" style="height:20px">
-                <button class="btn btn-primary rounded-pill" id="f_voltar">Voltar</button>
+            <div class="col-md-2">
+                <button class="btn btn-primary rounded-pill" style="border:solid 1px #fff!important" id="f_voltar">Voltar</button>
             </div>
         </div>
     </nav>

@@ -22,6 +22,10 @@
     <link rel="stylesheet" href="../style.css">
         <script src="https://code.jquery.com/jquery-3.7.1.min.js"
             integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+            <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.css" />
+  
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
+            
 </head>
 
 <body>
@@ -33,26 +37,94 @@
     </nav>
 
     <div class="col-md-12 mt-5">
-        <div class="card">
-            <div class="card-header">
-                <ul class="nav nav-tabs">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Usuários</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Ocorrências</a>
-                    </li>
-                </ul>
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="bombeiros-tab" data-bs-toggle="tab" data-bs-target="#bombeiros" type="button" role="tab" aria-controls="bombeiros" aria-selected="true">Bombeiros</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="pacientes-tab" data-bs-toggle="tab" data-bs-target="#pacientes" type="button" role="tab" aria-controls="pacientes" aria-selected="false">Pacientes</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="ocorrencias-tab" data-bs-toggle="tab" data-bs-target="#ocorrencias" type="button" role="tab" aria-controls="ocorrencias" aria-selected="false">Ocorrências</button>
+            </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade" id="bombeiros" role="tabpanel" aria-labelledby="bombeiros-tab">
+                <table class="table table-sm table-stripped">
+                    <thead>
+                        <tr>
+                            <th>Column 1</th>
+                            <th>Column 2</th>
+                            <th>Column 3</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>dale</td>
+                            <td>foda</td>
+                            <td>cria</td>
+                        </tr>
+                        <tr>
+                            <td>xoxoto</td>
+                            <td>cnpjoto</td>
+                            <td>iveto</td>
+                        </tr>
+                        <tr>
+                            <td>sangalo</td>
+                            <td>veronico</td>
+                            <td>paçoco</td>
+                        </tr>
+                        <tr>
+                            <td>sangalo</td>
+                            <td>veronico</td>
+                            <td>paçoco</td>
+                        </tr>
+                        <tr>
+                            <td>sangalo</td>
+                            <td>veronico</td>
+                            <td>paçoco</td>
+                        </tr>
+                        <tr>
+                            <td>sangalo</td>
+                            <td>veronico</td>
+                            <td>paçoco</td>
+                        </tr>
+                        <tr>
+                            <td>sangalo</td>
+                            <td>veronico</td>
+                            <td>paçoco</td>
+                        </tr>
+                        <tr>
+                            <td>sangalo</td>
+                            <td>veronico</td>
+                            <td>paçoco</td>
+                        </tr>
+                        <tr>
+                            <td>sangalo</td>
+                            <td>veronico</td>
+                            <td>paçoco</td>
+                        </tr>
+                        <tr>
+                            <td>sangalo</td>
+                            <td>veronico</td>
+                            <td>paçoco</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-            <div class="card-body">
-                tem que estilizar esse djabo
+            <div class="tab-pane fade" id="pacientes" role="tabpanel" aria-labelledby="pacientes-tab">
+
+            </div>
+            <div class="tab-pane fade" id="ocorrencias" role="tabpanel" aria-labelledby="ocorrencias-tab">
+                
             </div>
         </div>
     </div>
 </body>
 <script>
+    $(function(){
         var img = $(".nav-img")
-    $(window).on("resize", function () {
+        $(window).on("resize", function () {
             if ($(window).width() <= 992) {
                 img.addClass("sumir")
                 $(".nav-title").css("margin", "auto")
@@ -62,5 +134,17 @@
                 img.removeClass("sumir")
             }
         });
+        $(".nav-link").on("click", function(){
+            var ativos = $(".active")
+            $(ativos).removeClass("active")
+            var clickedButton = $(this)
+            $(clickedButton).addClass("active")
+            $(clickedButton).attr("aria-selected", "true")
+            var tabId = "#" + $(clickedButton).attr("aria-controls")
+            $(tabId).addClass("active show")
+        })
+
+        var table = $(".table").DataTable()
+    })
 </script>
 </html>
