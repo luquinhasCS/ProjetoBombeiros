@@ -1,3 +1,8 @@
+<?php 
+    require '../php/Db.php';
+    $db = new db();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -34,8 +39,7 @@
     <div class="col-md-12" id="principal">
         <div class="col-lg-3 d-flex flex-column ps-3 pt-1" style="margin-top: 5rem!important; height:550px; overflow:hidden; overflow-y:auto">
             <?php
-                require '../php/Db.php';
-                $db = new db();
+                $form_parts = array('');
 
                 $buttons = $db->select(
                     $table = "botao",
@@ -49,6 +53,8 @@
                         $buttonLabel = $button['label'];
                         $buttonPage = $button['page'];
 
+                        array_push($form_parts, $buttonLabel);
+
                         echo('<div class="coluna-botoes"><button id="f_button'. $buttonId .'" type="button" class="btn btn-primary rounded-pill">
                             '. $buttonLabel .'
                             </button> </div>'
@@ -56,15 +62,15 @@
                     }
                 }
 
+                $jsonArray = json_encode($form_parts);
+
                 $db -> close();
             ?>
         </div>
         <div class="col-md-12" style="margin-top:6rem">
-        
             <div class="col-md-12">   
-            <iframe id="form" frameborder="0"></iframe>
+                <iframe id="iframe" frameborder="0"></iframe>
             </div>
-            
         </div>
     </div>
 </body>
@@ -106,8 +112,9 @@
             $(".coluna-botoes").first().parent().addClass("d-flex")
             $(this).hide();
             $("#form").hide()
+            saveData()
         })
-
+        var buttonId
         $(".coluna-botoes > button").on("click", function(e){
             var element = e.target
             var selectedButton = $(".button-show")
@@ -116,15 +123,46 @@
             $(".coluna-botoes").first().parent().removeClass("d-flex")
             $(".coluna-botoes").first().parent().hide()
             $( "#f_voltar" ).show();
-            var idElement = $(element).attr('id').replace("f_button", "")
-            updateIframe(idElement)
+            buttonId = $(element).attr('id').replace("f_button", "")
+            updateIframe(buttonId)
 
         })
         function updateIframe(buttonId) {
-            var iframe = document.getElementById("form");
+            var iframe = document.getElementById("iframe");
             $(iframe).show()
             var url = "../php/generateForm.php?buttonId=" + buttonId;
             iframe.src = url;
+        }
+        function saveData(){
+            const iframe = document.getElementById("iframe");
+            const iframeDocument = iframe.contentDocument || iframe.contentWindow.document
+            const iframeForm = iframeDocument.getElementById('iframeFrom')
+            const formParts = <?php echo $jsonArray; ?>;
+            const formPartName = formParts[buttonId]
+            const formPartData = {
+                [formPartName]: 
+                    {
+                        formPartId: buttonId
+                    }
+            }
+
+            for (const element of iframeForm.elements) {
+                const key = element.id
+                switch(element.type){
+                    case 'checkbox':
+                        if(element.checked === true){
+                            formPartData[formPartName][key] = String(element.checked)
+                        }
+                    break
+                    case 'text':
+                        if(element.value){
+                            formPartData[formPartName][key] = element.value 
+                        }
+                    break
+                }
+            }
+            
+            console.log(formPartData)
         }
     })
 </script>
