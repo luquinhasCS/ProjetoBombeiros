@@ -62,7 +62,7 @@
                     }
                 }
 
-                $jsonArray = json_encode($form_parts);
+                $fomrPartsJson = json_encode($form_parts);
 
                 $db -> close();
             ?>
@@ -133,12 +133,28 @@
             var url = "../php/generateForm.php?buttonId=" + buttonId;
             iframe.src = url;
         }
+        function formatter(str) {
+        // Replace accents with their non-accented counterparts
+        const withoutAccents = str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        
+        // Remove spaces and convert to camel case
+        const formattedString = withoutAccents.replace(/\s+/g, ' ').split(' ')
+            .map((word, index) => {
+            if (index === 0) {
+                return word.toLowerCase();
+            }
+            return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+            })
+            .join('');
+
+        return formattedString;
+        }
         function saveData(){
             const iframe = document.getElementById("iframe");
             const iframeDocument = iframe.contentDocument || iframe.contentWindow.document
             const iframeForm = iframeDocument.getElementById('iframeFrom')
-            const formParts = <?php echo $jsonArray; ?>;
-            const formPartName = formParts[buttonId]
+            const formParts = <?php echo $fomrPartsJson; ?>;
+            const formPartName = formatter(formParts[buttonId])
             const formPartData = {
                 [formPartName]: 
                     {
@@ -162,7 +178,14 @@
                 }
             }
             
-            console.log(formPartData)
+            $.ajax({
+                type: "POST",
+                url: "../php/dataHolder.php", // Your PHP script URL
+                data: {jsonData: JSON.stringify(formPartData)},
+                success: function(response){
+                    console.log(`Response: ${response}`)
+                }
+            });
         }
     })
 </script>
