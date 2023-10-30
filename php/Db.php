@@ -32,7 +32,24 @@ class db {
         $query = "INSERT INTO $table ($columns) VALUES ($values)";
         $stmt = $this->pdo->prepare($query);
 
-        return $stmt->execute($data);
+        $success = $stmt->execute($data);
+
+        if ($success) {
+            // Get the ID of the last inserted row
+            $insertedId = $this->pdo->lastInsertId();
+
+            // Query the inserted data
+            $selectQuery = "SELECT * FROM $table WHERE id = :id"; // Assuming 'id' is the primary key
+            $selectStmt = $this->pdo->prepare($selectQuery);
+            $selectStmt->bindParam(':id', $insertedId);
+            $selectStmt->execute();
+
+            $insertedData = $selectStmt->fetch(PDO::FETCH_ASSOC);
+
+            return $insertedData;
+        } else {
+            return false;
+        }
     }
 
     public function update($table, $data, $condition) {

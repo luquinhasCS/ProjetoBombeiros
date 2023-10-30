@@ -180,7 +180,7 @@
             
             $.ajax({
                 type: "POST",
-                url: "../php/dataHolder.php", // Your PHP script URL
+                url: "../php/dataHolder.php",
                 data: {jsonData: JSON.stringify(formPartData)},
                 success: function(response){
                     console.log(`Response: ${response}`)
