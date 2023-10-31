@@ -19,16 +19,18 @@ foreach ($formData as $formPart) {
 }
 
 foreach($formPartAllData as $dataPart){
-    $newOccurence = $db->insert('ocorrencia', $dataPartValues) // isso aqui ta incompleto, falta passar os dados da ocorrencia
+    $ocurrenceStructure = array('date' => date('d/m/Y'))
+    $newOccurence = $db->insert('ocorrencia', $dataPartValues)
     if ($newOccurence) {
         echo "ocorrência registrada com sucesso!";
     } else {
         echo "Ocorreu um erro no registro da ocorrência.";
     }
-    $dataPartValues[]
+    $dataPartValues = array('ocorrencia_id' => )
     foreach($dataPart[1] as $propertyValuePair){
-        $propertyName = $propertyValuePair[0]; // isso aqui é na verdade o id da data form structure
+        $propertyName = $propertyValuePair[0];
         $propertyValue = $propertyValuePair[1];
+        if ($propertyValuePair[1] === 'true'){$propertyValue = 1}
         $dataPartValues[$propertyName] = $propertyValue;
     }
     if ($db->insert($tabelaNome, $dataPartValues)) {
@@ -36,7 +38,6 @@ foreach($formPartAllData as $dataPart){
     } else {
         echo "Ocorreu um erro no registro.";
     }
-    // id ocorrencia, id botao associado, value
-}
-// , ocorrencia, pegar o label ao inves do id                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+    // id ocorrencia, coluna_nome, value/estado
+}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
 ?>

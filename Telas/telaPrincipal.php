@@ -133,28 +133,45 @@
             var url = "../php/generateForm.php?buttonId=" + buttonId;
             iframe.src = url;
         }
-        function formatter(str) {
-        // Replace accents with their non-accented counterparts
-        const withoutAccents = str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-        
-        // Remove spaces and convert to camel case
-        const formattedString = withoutAccents.replace(/\s+/g, ' ').split(' ')
-            .map((word, index) => {
-            if (index === 0) {
-                return word.toLowerCase();
-            }
-            return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
-            })
-            .join('');
+        function camelCase(str) {
+            // Replace accents with their non-accented counterparts
+            const withoutAccents = str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            
+            // Remove spaces and convert to camel case
+            const formattedString = withoutAccents.replace(/\s+/g, ' ').split(' ')
+                .map((word, index) => {
+                if (index === 0) {
+                    return word.toLowerCase();
+                }
+                return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+                })
+                .join('');
 
-        return formattedString;
+            return formattedString;
+        }
+        function toSnakeCase(inputString) {
+            // Remove accents
+            const withoutAccents = inputString.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+
+            // Remove special characters and replace spaces with underscores
+            const formattedString = withoutAccents
+            .replace(/[^a-zA-Z0-9\s]/g, '') // Remove special characters
+            .replace(/\s+/g, '_');         // Replace spaces with underscores
+
+            // Convert the string to lowercase
+            const snakeCaseString = formattedString.toLowerCase();
+
+            // Remove leading and trailing underscores
+            const finalSnakeCase = snakeCaseString.replace(/^_+|_+$/g, '');
+
+            return finalSnakeCase;
         }
         function saveData(){
             const iframe = document.getElementById("iframe");
             const iframeDocument = iframe.contentDocument || iframe.contentWindow.document
             const iframeForm = iframeDocument.getElementById('iframeFrom')
             const formParts = <?php echo $fomrPartsJson; ?>;
-            const formPartName = formatter(formParts[buttonId])
+            const formPartName = camelCase(formParts[buttonId])
             const formPartData = {
                 [formPartName]: 
                     {
@@ -164,15 +181,16 @@
 
             for (const element of iframeForm.elements) {
                 const key = element.id
+                const label = toSnakeCase(iframeForm.querySelector(`label[for="${key}"]`).textContent)
                 switch(element.type){
                     case 'checkbox':
                         if(element.checked === true){
-                            formPartData[formPartName][key] = String(element.checked)
+                            formPartData[formPartName][label] = String(element.checked)
                         }
                     break
                     case 'text':
                         if(element.value){
-                            formPartData[formPartName][key] = element.value 
+                            formPartData[formPartName][label] = element.value 
                         }
                     break
                 }
