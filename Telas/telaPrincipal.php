@@ -28,15 +28,24 @@
 <body style="overflow:hidden">
     <nav class="nav navbar">
         <div class="container-fluid">
-            <button class="hamburger">&#9776;</button>
-            <img class="nav-img" src="../imgs/logo_pequena.png">
-            <h1 class="nav-title">Bombeiros Voluntários</h1>
+            <div class="col-md-2">
+                <button class="hamburger">&#9776;</button>
+            </div>
+            <div class="col-md-4">
+                <img class="nav-img" src="../imgs/logo_pequena.png">
+            </div>
+            <div class="text-center" style="width: 100%">
+                <h1 class="nav-title">Bombeiros Voluntários</h1>
+            </div>
             <div class="col-md-2">
                 <button class="btn btn-primary rounded-pill" style="border:solid 1px #fff!important" id="f_voltar">Voltar</button>
             </div>
+            <div class="col-md-2">
+                <button class="btn btn-primary rounded-pill" style="border:solid 1px #fff!important" id="f_salvar">Salvar Dados</button>
+            </div>
         </div>
     </nav>
-    <div class="col-md-12" id="principal">
+    <div class="col-md-12 row" id="principal">
         <div class="col-lg-3 d-flex flex-column ps-3 pt-1" style="margin-top: 5rem!important; height:550px; overflow:hidden; overflow-y:auto">
             <?php
                 $form_parts = array('');
@@ -67,38 +76,34 @@
                 $db -> close();
             ?>
         </div>
-        <div class="col-md-12" style="margin-top:6rem">
-            <div class="col-md-12">   
-                <iframe id="iframe" frameborder="0"></iframe>
-            </div>
+        <div class="col-md-6">
+            <iframe id="iframe" frameborder="0"></iframe>
         </div>
     </div>
 </body>
 
 <script>
     $(function () {
-        var img = $(".nav-img")
-        $( ".hamburger" ).hide();
-        $( "#f_voltar" ).hide();
+        $(".hamburger").parent().hide();
+        $("#f_voltar").parent().hide();
         $(window).on("resize", function () {
             if ($(window).width() <= 992) {
-                img.addClass("sumir")
-                $(".nav-title").css("margin", "auto")
+                $(".nav-img").parent().hide()
             }
             else {
                 $(".nav-title").css("margin", "")
-                img.removeClass("sumir")
+                $(".nav-img").parent().show()
             }
         });
         var parent = $(".coluna-botoes").first().parent()
         $(window).on("resize", function () {
             if ($(window).width() <= 992) {
                 $(parent).css("margin-top", "1rem")
-                $(".coluna-botoes").hide()
-                $(".hamburger").show()
+                $(".coluna-botoes").parent().hide()
+                $(".hamburger").parent().show()
             } else {
                 $(".coluna-botoes").show()
-                $(".hamburger").hide()
+                $(".hamburger").parent().hide()
                 $(parent).css("margin-top", "5rem")
             }
         })
@@ -110,22 +115,36 @@
         $("#f_voltar").on("click", function(){
             $(".coluna-botoes").show()
             $(".coluna-botoes").first().parent().addClass("d-flex")
-            $(this).hide();
+            $(this).parent().hide();
             $("#form").hide()
-            saveData()
+            $("#iframe").hide()
+        })
+        $("#f_salvar").on("click", function(){
+            $.ajax({
+                type: "POST",
+                url: "../php/dataSaver.php"
+            });
         })
         var buttonId
+        var iframeNaTela = false
         $(".coluna-botoes > button").on("click", function(e){
+            if($(window).width() <= 920){
+                $(".coluna-botoes").first().parent().removeClass("d-flex")
+                $(".coluna-botoes").first().parent().hide()
+                $( "#f_voltar" ).parent().show();
+                $( "#f_salvar" ).parent().show();
+            }
             var element = e.target
             var selectedButton = $(".button-show")
             $(selectedButton).removeClass("button-show")
             $(element).addClass("button-show")
-            $(".coluna-botoes").first().parent().removeClass("d-flex")
-            $(".coluna-botoes").first().parent().hide()
-            $( "#f_voltar" ).show();
             buttonId = $(element).attr('id').replace("f_button", "")
+            
+            if(iframeNaTela){
+                saveData()
+            }   
+        iframeNaTela = true
             updateIframe(buttonId)
-
         })
         function updateIframe(buttonId) {
             var iframe = document.getElementById("iframe");

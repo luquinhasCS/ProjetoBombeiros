@@ -97,7 +97,6 @@ option {
 
 .nav-title {
     color: #fff;
-    margin-left: 160px;
 }
 
 @media (max-width: 500px) {
@@ -157,4 +156,8 @@ div:has(.coluna-botoes)::-webkit-scrollbar-thumb {
     cursor:pointer;
     outline:none;
     z-index:10000000000000;
+  }
+
+  .container-fluid{
+    flex-wrap: nowrap !important;
   }
