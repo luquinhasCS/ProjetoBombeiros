@@ -1,4 +1,4 @@
-body {
+* {
     margin: 0;
     padding: 0;
     font-family: Kanit !important;
@@ -161,3 +161,37 @@ div:has(.coluna-botoes)::-webkit-scrollbar-thumb {
   .container-fluid{
     flex-wrap: nowrap !important;
   }
+
+  .menu-loctraumas{
+    background-color: #1a2759;
+    max-width: fit-content;
+    z-index:1000;
+    border-radius: 10px;
+    padding:0;
+  }
+  .menu-loctraumas li{
+    list-style: none;
+    color: #fff;
+    padding: 10px 20px;
+}
+.menu-loctraumas li:hover{
+    background-color: #4b64c9;
+    cursor: pointer;
+}
+.menu-loctraumas li:not(:last-child){
+    border-bottom: solid 1px #fff;
+}
+.menu-loctraumas li:is(:first-child){
+    border-radius: 10px 10px 0 0;
+    
+}
+.menu-loctraumas li:is(:last-child){
+    border-radius: 0 0 10px 10px;
+    background-color: #d64c4c;
+}
+
+.table-scroll {
+    position: relative;
+    height: 200px;
+    overflow: auto;
+    }
