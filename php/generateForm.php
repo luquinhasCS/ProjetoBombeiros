@@ -21,7 +21,7 @@ $form_structure = $db->select(
 );
 
 if ($form_structure) {
-    echo('<form id="iframeFrom">');
+    echo('<form id="iframeFrom"><div class="checkboxes">');
     foreach ($form_structure as $row) {
         $inputId = $row['id'];
         $label = $row["label"];
@@ -56,6 +56,6 @@ if ($form_structure) {
                 break;
         }
     }
-    echo('</form>');
+    echo('</div></form>');
 }
 ?>

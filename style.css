@@ -5,6 +5,10 @@
     box-sizing: border-box;
 }
 
+body{
+overflow: hidden;
+}
+
 .left-column {
     background-color: #fff;
     padding: 20px;
@@ -195,3 +199,28 @@ div:has(.coluna-botoes)::-webkit-scrollbar-thumb {
     height: 200px;
     overflow: auto;
     }
+
+#iframe, #iframeFrom{
+    width: 100%;
+}
+
+.checkboxes{
+    padding: 20px 50px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    overflow: hidden;
+}
+
+.checkboxes div {
+    min-height: min-content;
+}
+
+label:has([type="search"]){
+    display: flex;
+    align-items: center;
+    gap: 10px
+}
+
+input:not([type="checkbox"]) {
+    margin-bottom: 0 !important;
+}

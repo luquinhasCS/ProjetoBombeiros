@@ -76,7 +76,7 @@
                 $db -> close();
             ?>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-12">
             <iframe id="iframe" frameborder="0"></iframe>
         </div>
     </div>
@@ -86,6 +86,13 @@
     $(function () {
         $(".hamburger").parent().hide();
         $("#f_voltar").parent().hide();
+        if ($(window).width() <= 992) {
+                $(".nav-img").parent().hide()
+            }
+            else {
+                $(".nav-title").css("margin", "")
+                $(".nav-img").parent().show()
+            }
         $(window).on("resize", function () {
             if ($(window).width() <= 992) {
                 $(".nav-img").parent().hide()

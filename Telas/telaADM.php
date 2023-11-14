@@ -25,6 +25,7 @@
             <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.css" />
   
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
+<script src="https://cdn.datatables.net/plug-ins/1.13.7/i18n/pt-BR.json"></script>
             
 </head>
 
@@ -36,7 +37,7 @@
         </div>
     </nav>
 
-    <div class="col-md-12 mt-5">
+    <div class="col-md-12" style="margin-top: 5rem">
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
                 <button class="nav-link" id="bombeiros-tab" data-bs-toggle="tab" data-bs-target="#bombeiros" type="button" role="tab" aria-controls="bombeiros" aria-selected="true">Bombeiros</button>
@@ -124,16 +125,14 @@
 <script>
     $(function(){
         var img = $(".nav-img")
-        $(window).on("resize", function () {
             if ($(window).width() <= 992) {
                 img.addClass("sumir")
                 $(".nav-title").css("margin", "auto")
             }
             else {
-                $(".nav-title").css("margin", "")
+                $(".nav-title").css("margin-left", "150px")
                 img.removeClass("sumir")
             }
-        });
         $(".nav-link").on("click", function(){
             var ativos = $(".active")
             $(ativos).removeClass("active")
@@ -144,7 +143,15 @@
             $(tabId).addClass("active show")
         })
 
-        var table = $(".table").DataTable()
+        $(document).ready(function() {
+    $('.table').DataTable( {
+        "language": {
+            url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/pt-BR.json',
+        },
+        "lengthChange": false,
+        "bPaginate": false
+    } );
+} );
     })
 </script>
 </html>
