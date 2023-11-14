@@ -66,6 +66,7 @@ session_start();
       <thead>
         <th>Local</th>
         <th>Tipo</th>
+        <th></th>
       </thead>
       <tbody>
       </tbody>
@@ -78,25 +79,47 @@ session_start();
 <script>
   $(function(){
     $(".menu-loctraumas").hide()
-    $(".parte, .parte2").on("click", function(e){
-      var parteClicada = $(this).data("nome")
-      var tbody = $(".table > tbody")
-      $(tbody).append("<tr><td>" + parteClicada + "</td><td>Dale</td></tr>")
+
+    $(".parte, .parte2").on("click", function(){
       var mouseTop = $(this).position().top;
       var mousePosX = $(this).position().left
-      var element = e.target
-      console.log(element)
-      
+      var quantidadePartesClicadas = $(".parteClicada")
 
-      if($(".menu-loctraumas").is(":visible") && !$(element).parent().hasClass("menu-loctraumas")){
-        $(".menu-loctraumas").hide()
-      } else if ($(element).hasClass(".f-fechar")){
-        $(".menu-loctraumas").hide()
+      if (quantidadePartesClicadas.length > 0){
+        $(".parte, .parte2").removeClass("parteClicada")
       }
-      else {
-        $(".menu-loctraumas").show()
-        $(".menu-loctraumas").css("top", mouseTop)
-        $(".menu-loctraumas").css("left", mousePosX + 40)
+      
+      $(this).addClass("parteClicada")
+      
+      $(".menu-loctraumas").show()
+      $(".menu-loctraumas").css("top", mouseTop)
+      $(".menu-loctraumas").css("left", mousePosX + 40)  
+    })
+    $(".f_fechar").on("click", function(){
+        $(".menu-loctraumas").hide()
+    })
+
+    function excluiRow(){
+      console.log($(this))
+    }
+    
+    $(".menu-loctraumas > li").on("click", function(e){
+      var element = e.target
+      var trauma = $(element).html()
+      var parteClicada = $(".parteClicada").data("nome")
+      $(".menu-loctraumas").hide()
+      var tbody = $(".table > tbody")
+      $(tbody).append("<tr><td>" + parteClicada + "</td><td>"+ trauma +"</td> <td><button type='button' class='fechar'><svg xmlns='http://www.w3.org/2000/svg 'height='1em' viewBox='0 0 384 512'><path d='M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z'/></svg></button></td></tr>")    
+    })
+    $("body").on("click",".fechar",function(){
+          $(this).parents("tr").remove();
+        });
+
+    $("body").on("click", function(e){
+      var element = e.target
+      
+      if(!$(element).hasClass("parte") && !$(element).hasClass("parte2") && !$(element).parent().hasClass("menu-loctraumas")){
+        $(".menu-loctraumas").hide()
       }
     })
   })
