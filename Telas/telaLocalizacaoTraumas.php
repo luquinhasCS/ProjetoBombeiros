@@ -39,26 +39,26 @@ session_start();
       <li class="text-center f_fechar">Fechar</li>
 </ul>
       <div id="div_traumas_localizados">
-        <div class="parte" id="cabeca" data-nome="Cabeça frente"></div>
+        <div class="parte" id="cabeca" data-nome="Cabeça" data-face="Frente"></div>
 
-        <div class="parte" id="tronco" data-nome="Tronco frente"></div>
+        <div class="parte" id="tronco" data-nome="Tronco" data-face="Frente"></div>
 
-        <div class="parte" id="membrossuperiores" data-nome="Braço direito frente"></div>
-        <div class="parte" id="membrossuperiores2" data-nome="Braço esquerdo frente"></div>
+        <div class="parte" id="membrossuperiores" data-nome="Braço direito" data-face="Frente"></div>
+        <div class="parte" id="membrossuperiores2" data-nome="Braço esquerdo" data-face="Frente"></div>
 
-        <div class="parte" id="membrosinferiores" data-nome="Perna direita frente"></div>              
-        <div class="parte" id="membrosinferiores2" data-nome="Perna esquerda frente"></div>
+        <div class="parte" id="membrosinferiores" data-nome="Perna direita" data-face="Frente"></div>              
+        <div class="parte" id="membrosinferiores2" data-nome="Perna esquerda" data-face="Frente"></div>
 
 
-        <div class="parte2" id="cabeca2" data-nome="Cabeça atrás"></div>
+        <div class="parte2" id="cabeca2" data-nome="Cabeça" data-face="Atrás"></div>
         
-        <div class="parte2" id="tronco2" data-nome="Tronco atrás"></div>             
+        <div class="parte2" id="tronco2" data-nome="Tronco" data-face="Atrás"></div>             
 
-        <div class="parte2" id="membrossuperiores1" data-nome="Braço esquerdo atrás"></div>  
-        <div class="parte2" id="membrossuperiores02" data-nome="Braço direito atrás"></div>
+        <div class="parte2" id="membrossuperiores1" data-nome="Braço esquerdo" data-face="Atrás"></div>  
+        <div class="parte2" id="membrossuperiores02" data-nome="Braço direito" data-face="Atrás"></div>
         
-        <div class="parte2" id="membrosinferiores1" data-nome="Perna esquerda atrás" ></div>
-        <div class="parte2" id="membrosinferiores02" data-nome="Perna direita atrás"></div>
+        <div class="parte2" id="membrosinferiores1" data-nome="Perna esquerda" data-face="Atrás"></div>
+        <div class="parte2" id="membrosinferiores02" data-nome="Perna direita" data-face="Atrás"></div>
       </div> 
     </div>
     <div class="table-scroll"> 
@@ -98,22 +98,25 @@ session_start();
     $(".f_fechar").on("click", function(){
         $(".menu-loctraumas").hide()
     })
+    var contador = 0
+    const allData = {'localizacao_traumas': {}}   
 
-    function excluiRow(){
-      console.log($(this))
-    }
-    
     $(".menu-loctraumas > li").on("click", function(e){
       var element = e.target
       var trauma = $(element).html()
       var parteClicada = $(".parteClicada").data("nome")
+      var faceClicada = $(".parteClicada").data("face")
       $(".menu-loctraumas").hide()
       var tbody = $(".table > tbody")
-      $(tbody).append("<tr><td>" + parteClicada + "</td><td>"+ trauma +"</td> <td><button type='button' class='btn btn-danger fechar d-flex'><svg xmlns='http://www.w3.org/2000/svg 'height='1em' viewBox='0 0 384 512'><path d='M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z' fill='#fff'/></svg></button></td></tr>")    
+      $(tbody).append("<tr><td>" + parteClicada + "</td><td>"+ trauma +"</td> <td><button type='button' class='btn btn-danger fechar d-flex'><svg xmlns='http://www.w3.org/2000/svg 'height='1em' viewBox='0 0 384 512'><path d='M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z' fill='#fff'/></svg></button></td></tr>")
+
+      newPart = {"parte": parteClicada, "face": faceClicada, "trauma": trauma}
+      allData['localizacao_traumas'][contador] = newPart
+      contador++
     })
-    $("body").on("click",".fechar",function(){
-          $(this).parents("tr").remove();
-        });
+    $("body").on("click", ".fechar", function(){
+      $(this).parents("tr").remove();
+    });
 
     $("body").on("click", function(e){
       var element = e.target
