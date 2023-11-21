@@ -130,7 +130,11 @@
         $("#f_salvar").on("click", function(){
             $.ajax({
                 type: "POST",
-                url: "../php/dataSaver.php"
+                url: "../php/dataSaver.php",
+                data: {},
+                success: function(response){
+                    console.log(`SaverResponse: ${response}`)
+                }
             });
         })
         var buttonId
