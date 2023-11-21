@@ -157,7 +157,11 @@
         function updateIframe(buttonId) {
             var iframe = document.getElementById("iframe");
             $(iframe).show()
-            var url = "../php/generateForm.php?buttonId=" + buttonId;
+            if (buttonId == 8){
+                var url = 'telaLocalizacaoTraumas.php'
+            } else {
+                var url = "../php/generateForm.php?buttonId=" + buttonId;
+            }
             iframe.src = url;
         }
         function toSnakeCase(inputString) {
