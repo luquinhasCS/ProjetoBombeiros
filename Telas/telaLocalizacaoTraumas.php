@@ -74,6 +74,8 @@ session_start();
     </div>
   </form>
 
+  <button id="f_voltar" type="button" class="btn btn-primary rounded-pill">Voltar</button>
+
   
 </body>
 <script>
@@ -125,6 +127,11 @@ session_start();
         $(".menu-loctraumas").hide()
       }
     })
+
+    $("#f_voltar").on("click", function(){
+      window.location.href="telaPrincipal.php";
+    })
+
   })
 </script>
 </html>

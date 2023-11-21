@@ -202,6 +202,7 @@ div:has(.coluna-botoes)::-webkit-scrollbar-thumb {
 
 #iframe, #iframeFrom{
     width: 100%;
+    height: 100vh;
 }
 
 .checkboxes{
