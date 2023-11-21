@@ -125,6 +125,7 @@
             $(this).parent().hide();
             $("#form").hide()
             $("#iframe").hide()
+            saveData()
         })
         $("#f_salvar").on("click", function(){
             $.ajax({
@@ -147,10 +148,6 @@
             $(element).addClass("button-show")
             buttonId = $(element).attr('id').replace("f_button", "")
             
-            if(iframeNaTela){
-                saveData()
-            }   
-        iframeNaTela = true
             updateIframe(buttonId)
         })
         function updateIframe(buttonId) {
@@ -158,22 +155,6 @@
             $(iframe).show()
             var url = "../php/generateForm.php?buttonId=" + buttonId;
             iframe.src = url;
-        }
-        function camelCase(str) {
-            // Replace accents with their non-accented counterparts
-            const withoutAccents = str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-            
-            // Remove spaces and convert to camel case
-            const formattedString = withoutAccents.replace(/\s+/g, ' ').split(' ')
-                .map((word, index) => {
-                if (index === 0) {
-                    return word.toLowerCase();
-                }
-                return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
-                })
-                .join('');
-
-            return formattedString;
         }
         function toSnakeCase(inputString) {
             // Remove accents
@@ -197,13 +178,8 @@
             const iframeDocument = iframe.contentDocument || iframe.contentWindow.document
             const iframeForm = iframeDocument.getElementById('iframeFrom')
             const formParts = <?php echo $fomrPartsJson; ?>;
-            const formPartName = camelCase(formParts[buttonId])
-            const formPartData = {
-                [formPartName]: 
-                    {
-                        formPartId: buttonId
-                    }
-            }
+            const formPartName = toSnakeCase(formParts[buttonId])
+            const formPartData = { [formPartName]: {} }
 
             for (const element of iframeForm.elements) {
                 const key = element.id
