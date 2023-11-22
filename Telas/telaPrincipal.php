@@ -1,6 +1,7 @@
 <?php 
     require '../php/Db.php';
     $db = new db();
+    session_start();
 ?>
 
 <!DOCTYPE html>
@@ -72,7 +73,7 @@
                 }
 
                 $fomrPartsJson = json_encode($form_parts);
-
+                $_SESSION["FORMPARTS"] = $fomrPartsJson
                 $db -> close();
             ?>
         </div>
