@@ -4,7 +4,7 @@ class db {
 
     public function __construct() {
         try {
-            $this->pdo = new PDO("mysql:dbname=projeto_bombeiro;host=localhost;charset=utf8","root","");
+            $this->pdo = new PDO("mysql:dbname=projeto_bombeiros;host=localhost;charset=utf8","root","");
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
             die("Connection failed: " . $e->getMessage());
