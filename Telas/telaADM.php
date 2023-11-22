@@ -144,18 +144,32 @@
             $(clickedButton).attr("aria-selected", "true")
             var tabId = "#" + $(clickedButton).attr("aria-controls")
             $(tabId).addClass("active show")
+            var idButton = $(clickedButton).attr("id")
+            var tables = {"bombeiros-tab": "bombeiro", "ocorrencias-tab": "ocorrencia"}
+            getTableContent(tables[idButton])
         })
-
         $(document).ready(function() {
-    $('.table').DataTable( {
-        "language": {
-            url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/pt-BR.json',
-        },
-        "lengthChange": false,
-        "bPaginate": false
-    } );
-} );
-    $("#f_adicionar-bombeiro").on("click", function(){
+            $('.table').DataTable({
+                "language": {
+                    url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/pt-BR.json',
+                },
+                "lengthChange": false,
+                "bPaginate": false
+            });
+        });
+        var lista = []
+        function getTableContent(table){
+            $.ajax({
+                type: "POST",
+                url: "../php/getTableContent.php",
+                data: {table: table},
+                success: function(response){
+                    lista = response
+                    console.log(lista)
+                }
+            });
+        }
+        $("#f_adicionar-bombeiro").on("click", function(){
         window.location.href = "TelaCadastro.html"
     })
     })
