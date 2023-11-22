@@ -16,8 +16,12 @@
 </head>
 
 <body>
-    <div class="alert alert-danger" id="danger-alert">
-        Você deve preencher todos os campos
+    <div class="col-md-12 d-flex justify-content-center mt-5">
+        <div class="col-md-6">
+    <div class="alert alert-success" role="alert">
+        <p>Cadastro efetuado com sucesso!</p>
+      </div>
+    </div>
     </div>
     <div class="col-md-12 d-flex justify-content-center align-items-center" style="height:100vh">
         <div class="col-md-9">
@@ -63,7 +67,9 @@
                     </div>
                 </div>
                 <div class="col-md-12">
-                    <div class="d-flex justify-content-end">
+                    <div class="d-flex justify-content-between">
+                        <button type="button" id="f_voltar" class="btn btn-primary login-button mt-5">Voltar</button>
+
                         <button type="submit" class="btn btn-primary login-button mt-5">Cadastrar</button>
                     </div>
             </form>
@@ -96,8 +102,29 @@
                         console.error('Ocorreu um erro ao enviar os dados: ' + error);
                     }
                 });
+                var email = $("#f_email")
+                var senha = $("#f_password")
+                var nome = $("#f_username")
+                var telefone = $("#f_telefone")
+                var cpf = $("#f_cpf")
+                var sexo = $("#f_sexo")
+
+                $(email).val("")
+                $(senha).val("")
+                $(nome).val("")
+                $(telefone).val("")
+                $(cpf).val("")
+                $(sexo).val("")
+                var alert = $(".alert")
+                $(alert).show()
+                setTimeout(function(){$(alert).hide()}, 1250)
+
             };
         });
+        
+        $("#f_voltar").on("click", function(){
+            window.location.href = "telaADM.php"
+        })
     });
 
 </script>

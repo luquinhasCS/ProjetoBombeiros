@@ -34,6 +34,9 @@
         <div class="container-fluid">
             <img class="nav-img" src="../imgs/logo_pequena.png">
             <h1 class="nav-title">Bombeiros Voluntários</h1>
+            <div class="col-md-4">
+                <button class="btn btn-primary rounded-pill" style="border:solid 1px #fff!important" id="f_adicionar-bombeiro">Adicionar bombeiro</button>
+            </div>
         </div>
     </nav>
 
@@ -152,6 +155,9 @@
         "bPaginate": false
     } );
 } );
+    $("#f_adicionar-bombeiro").on("click", function(){
+        window.location.href = "TelaCadastro.html"
+    })
     })
 </script>
 </html>
