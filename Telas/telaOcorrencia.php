@@ -18,7 +18,7 @@
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"
         integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
 </head>
-<body>
+<body style="overflow: inherit">
 <nav class="nav navbar">
         <div class="container-fluid">
             <div class="text-center" style="width: 100%">
@@ -27,7 +27,7 @@
         </div>
     </nav>
 
-<div class="col-sm-12 m-3">
+<div class="col-sm-12 m-3 dale">
 
             <input type="hidden" name="f_ocorrenciaID" id="input" value="<?= $_GET["ocorrenciaId"]?>">
 
@@ -44,33 +44,51 @@
         data: {ocorrenciaId: $("#input").val()},
         success: function(response){
             response.replace("[]", "")
-            console.log(response)
             var lista = JSON.parse(response)
-           console.log(response)
+            
             for (const key in lista) {
                 if (Object.hasOwnProperty.call(lista, key)) {
-                    const columns = lista[key];
+                    var div = $("#checkboxes")
+                    var primeiroaDiv = $(".dale")
+                    const tables = lista[key][0];
+                    if (tables != undefined){
+                        const divAAdicionar = document.createElement("div");
 
-                    for (const chave in columns) {
-                        if (Object.hasOwnProperty.call(columns, chave)) {
-                            const data = columns[chave];
-                            console.log(data)
+                        divAAdicionar.setAttribute("id", key)
+                        $(divAAdicionar).append("<h1>"+ titleCase(key) +"</h1")
+                        for (const prop in tables) {
+                        if (Object.hasOwnProperty.call(tables, prop)) {
+                            let checked = 0
+                            if (tables[prop] == 1){
+                                checked = 1
+                            }                            
+                            if (prop != "id"){
+                                if (prop != "ocorrencia_id"){
+                                    console.log(divAAdicionar)
+                                var dados = ("<div class='col-sm-12 form-check'>" +
+                                            "<label for='' class='form-check-label'>" + prop + "</label>" +
+                                            "<input type='checkbox' class='form-check-input' disabled id=''" + (checked ? "checked" : "") + ">" +
+                                          "</div>")
+                                        }
+                                        $(divAAdicionar).append(dados)
+                            }
                         }
                     }
+                $(div).append(divAAdicionar)
+
+                    }
                 }
+
             }
-
-            // <div class="col-sm-3 form-check">
-            //     <label for="codps" class="form-check-label">CÓD. PS</label>
-            //     <input name="f_cod_ps" type="checkbox" class="form-check-input" id="codps" name="codps" checked>
-            // </div>
-
-
         },
         error: function(){
             console.log("foda")
         }
     });
+
+    const titleCase = (s) =>
+                            s.replace (/^[-_]*(.)/, (_, c) => c.toUpperCase())
+                            .replace (/[-_]+(.)/g, (_, c) => ' ' + c.toUpperCase())
         })
 </script>
 

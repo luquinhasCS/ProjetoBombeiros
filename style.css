@@ -229,3 +229,8 @@ input:not([type="checkbox"]) {
 .selecionada{
     background: rgb(105, 105, 247)
 }
+
+#checkboxes{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}

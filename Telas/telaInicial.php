@@ -26,9 +26,14 @@
             </div>
         </div>
     </nav>
-    <form action="" style="height:100vh">
-        <div class="col-md-12 d-flex justify-content-center align-items center" style="margin-top:354px">
-            <button class="btn btn-primary rounded-pill" style="border:solid 1px #fff!important" id="f_iniciar">Iniciar Ocorrência</button>
+    <form action="">
+        <div class="col-md-12  d-flex flex-column justify-content-center align-items-center" style="margin-top:250px">
+            <div class="col-md-6 d-flex justify-content-center">
+                <button class="btn btn-primary rounded-pill" style="border:solid 1px #fff!important" id="f_iniciar">Iniciar Ocorrência</button>
+            </div>
+            <div class="botaoadm col-md-6 d-flex justify-content-center d-none">
+                <button class="btn btn-primary rounded-pill" style="border:solid 1px #fff!important" id="f_adm">Acessar tela administração</button>
+            </div>
         </div>
     </form>
 </body>
@@ -38,6 +43,24 @@
         e.preventDefault()
         window.location.href = "telaPrincipal.php"
     })
+    $("#f_adm").on("click", function(e){
+        e.preventDefault()
+        window.location.href = "telaAdm.php"
+    })
+
+    $.ajax({
+        type: "POST",
+        url: "../php/getUserTipo.php",
+        data: {},
+        success: function(response){
+            const bombeiroId = response
+            let idAdm = 1
+            console.log(bombeiroId)
+            if (bombeiroId == idAdm) {
+                $(".botaoadm").removeClass("d-none")
+            }
+        }
+    });
 })
 </script>
 </html>
