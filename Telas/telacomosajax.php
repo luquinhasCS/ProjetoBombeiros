@@ -16,5 +16,12 @@
         success: function(response){
             console.log(`Response: ${response}`)
         }
+    });$.ajax({
+        type: "POST",
+        url: "../php/getUserTipo.php",
+        data: {},
+        success: function(response){
+            const bombeiroId = response
+        }
     });
 </script>

@@ -20,8 +20,8 @@ if (!empty($userData)) {
     $storedHashedPassword = $userData[0]['password'];
 
     if ( $hashedPassword === $storedHashedPassword) {
-        $idBombeiro = $userData[0]['id'];
-        $_SESSION["logado"] = $idBombeiro;
+        $bombeiro = $userData;
+        $_SESSION["bombeiro_logado"] = $bombeiro;
         echo '{"res": 2}';
 
     } else {
