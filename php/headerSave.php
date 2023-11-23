@@ -3,6 +3,13 @@ require "Db.php";
 $db = new db();
 
 $ocorrenciaId = $_POST['f_ocorrenciaID'];
+
+$ocorrenciaResp = $db->select(
+    $table = 'cabecalho',
+    $select = "*",
+    $condition = "cabecalho.ocorrencia_id = $ocorrenciaId"
+);
+
 $sexo = $_POST['f_sexo'];
 $nome_do_hospital = $_POST['f_nome_do_hospital'];
 $nome = $_POST['f_nome'];
@@ -43,10 +50,18 @@ $insertData = array(
     'cod_sia_sus' => $cod_sia_sus
 );
 
-if ($db->insert('cabecalho', $insertData)) {
-    echo "A ocorrência registrado com sucesso!";
+if (!$ocorrenciaResp) {
+    if ($db->insert('cabecalho', $insertData)) {
+        echo "A ocorrência registrado com sucesso!";
+    } else {
+        echo "Ocorreu um erro no registro da ocorrência.";
+    }
 } else {
-    echo "Ocorreu um erro no registro da ocorrência.";
+    if ($db->update('cabecalho', $insertData, "cabecalho.ocorrencia_id = $ocorrenciaId")){
+        echo "A ocorrência alterada com sucesso!";
+    } else {
+        echo "Ocorreu um erro na alteração da ocorrência.";
+    }
 }
 
 $db->close();

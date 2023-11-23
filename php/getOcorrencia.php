@@ -40,7 +40,11 @@
             $select = "*",
             $condition = $condicao
         );
-        $response[toSnakeCase($part["label"])] = $selectData;
+        if (!$selectData){
+            $response[toSnakeCase($part["label"])] = $selectData;
+        } else {
+            $response[toSnakeCase($part["label"])] = {}
+        }
         echo json_encode($selectData);
     };
 

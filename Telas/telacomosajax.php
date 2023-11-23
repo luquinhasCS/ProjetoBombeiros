@@ -23,5 +23,26 @@
         success: function(response){
             const bombeiroId = response
         }
+    });$.ajax({
+        type: "POST",
+        url: "../php/updateBombeiro.php",
+        data: {bombeiroId: variavelComOId},
+        success: function(response){
+            console.log(response)
+        }
+    }); $.ajax({
+        type: "POST",
+        url: "../php/deleteBombeiro.php",
+        data: {bombeiroId: variavelComOId},
+        success: function(response){
+            console.log(response)
+        }
+    }); $.ajax({
+        type: "POST",
+        url: "../php/getBombeiro.php",
+        data: {bombeiroId: variavelComOId},
+        success: function(response){
+            console.log(response)
+        }
     });
 </script>
