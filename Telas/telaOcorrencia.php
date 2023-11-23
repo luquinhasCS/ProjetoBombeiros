@@ -80,11 +80,9 @@
                 }
 
             }
-        },
-        error: function(){
-            console.log("foda")
         }
     });
+
 
     const titleCase = (s) =>
                             s.replace (/^[-_]*(.)/, (_, c) => c.toUpperCase())
