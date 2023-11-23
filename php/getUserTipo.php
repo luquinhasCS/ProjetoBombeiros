@@ -5,7 +5,7 @@ require "Db.php";
 $db = new db();
 
 $bombeiro = $_SESSION['bombeiro_logado'];
-$bombeiroId = $bombeiro['id']
+$bombeiroId = $bombeiro[0]['id'];
 
 echo $bombeiroId;
 
