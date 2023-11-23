@@ -46,81 +46,46 @@
                 <button class="nav-link" id="bombeiros-tab" data-bs-toggle="tab" data-bs-target="#bombeiros" type="button" role="tab" aria-controls="bombeiros" aria-selected="true">Bombeiros</button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link" id="pacientes-tab" data-bs-toggle="tab" data-bs-target="#pacientes" type="button" role="tab" aria-controls="pacientes" aria-selected="false">Pacientes</button>
-            </li>
-            <li class="nav-item" role="presentation">
                 <button class="nav-link" id="ocorrencias-tab" data-bs-toggle="tab" data-bs-target="#ocorrencias" type="button" role="tab" aria-controls="ocorrencias" aria-selected="false">Ocorrências</button>
             </li>
         </ul>
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade" id="bombeiros" role="tabpanel" aria-labelledby="bombeiros-tab">
-                <table class="table table-sm table-stripped">
+                <table class="table table-sm table-stripped table-scroll">
                     <thead>
                         <tr>
-                            <th>Column 1</th>
-                            <th>Column 2</th>
-                            <th>Column 3</th>
+                            <th>CPF</th>
+                            <th>Nome</th>
+                            <th>Email</th>
+                            <th>Sexo</th>
+                            <th>Telefone</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>dale</td>
-                            <td>foda</td>
-                            <td>cria</td>
-                        </tr>
-                        <tr>
-                            <td>xoxoto</td>
-                            <td>cnpjoto</td>
-                            <td>iveto</td>
-                        </tr>
-                        <tr>
-                            <td>sangalo</td>
-                            <td>veronico</td>
-                            <td>paçoco</td>
-                        </tr>
-                        <tr>
-                            <td>sangalo</td>
-                            <td>veronico</td>
-                            <td>paçoco</td>
-                        </tr>
-                        <tr>
-                            <td>sangalo</td>
-                            <td>veronico</td>
-                            <td>paçoco</td>
-                        </tr>
-                        <tr>
-                            <td>sangalo</td>
-                            <td>veronico</td>
-                            <td>paçoco</td>
-                        </tr>
-                        <tr>
-                            <td>sangalo</td>
-                            <td>veronico</td>
-                            <td>paçoco</td>
-                        </tr>
-                        <tr>
-                            <td>sangalo</td>
-                            <td>veronico</td>
-                            <td>paçoco</td>
-                        </tr>
-                        <tr>
-                            <td>sangalo</td>
-                            <td>veronico</td>
-                            <td>paçoco</td>
-                        </tr>
-                        <tr>
-                            <td>sangalo</td>
-                            <td>veronico</td>
-                            <td>paçoco</td>
-                        </tr>
                     </tbody>
                 </table>
             </div>
-            <div class="tab-pane fade" id="pacientes" role="tabpanel" aria-labelledby="pacientes-tab">
-
-            </div>
             <div class="tab-pane fade" id="ocorrencias" role="tabpanel" aria-labelledby="ocorrencias-tab">
-                
+                <table class="table table-sm table-stripped  table-scroll">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Nome</th>
+                            <th>Idade</th>
+                            <th>RG/CPF Paciente</th>
+                            <th>Sexo</th>
+                            <th>Acompanhante</th>
+                            <th>Idade Acompanhante</th>
+                            <th>Despachante</th>
+                            <th>Data</th>
+                            <th>Fone</th>
+                            <th>Local</th>
+                            <th>Nome Hospital</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
@@ -145,33 +110,94 @@
             var tabId = "#" + $(clickedButton).attr("aria-controls")
             $(tabId).addClass("active show")
             var idButton = $(clickedButton).attr("id")
-            var tables = {"bombeiros-tab": "bombeiro", "ocorrencias-tab": "ocorrencia"}
+            var tables = {"bombeiros-tab": "bombeiro", "ocorrencias-tab": "cabecalho"}
             getTableContent(tables[idButton])
         })
-        $(document).ready(function() {
-            $('.table').DataTable({
-                "language": {
-                    url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/pt-BR.json',
-                },
-                "lengthChange": false,
-                "bPaginate": false
-            });
-        });
         var lista = []
+        var tbody = $(".table>tbody")
+        var table = $('.table')
         function getTableContent(table){
             $.ajax({
                 type: "POST",
                 url: "../php/getTableContent.php",
                 data: {table: table},
                 success: function(response){
-                    lista = response
-                    console.log(lista)
+                    $(table).empty()
+                    lista = JSON.parse(response)
+                    if(table == "bombeiro"){
+                    $(".table").DataTable().destroy()
+                        $(".table").DataTable({
+                        "language": {
+                            url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/pt-BR.json',
+                        },
+                        "lengthChange": false,
+                        "bPaginate": false,
+                        data: lista,
+                        columns: [
+                            {data: "cpf"},
+                            {data: "username"},
+                            {data: "email"},
+                            {data: "sexo"},
+                            {data: "telefone"}
+                        ]
+                    });
+                    } else{
+                        $(".table").DataTable().destroy()
+
+                        $(".table").DataTable({
+                            "language": {
+                                url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/pt-BR.json',
+                            },
+                            "lengthChange": false,
+                            "bPaginate": false,
+                            data: lista,
+                            columns: [
+                                {data: "ocorrencia_id"},
+                                {data: "nome"},
+                                {data: "idade"},
+                                {data: "rg_cpf_paciente"},
+                                {data: "sexo"},
+                                {data: "acompanhante"},
+                                {data: "idade_acompanhante"},
+                                {data: "despachante"},
+                                {data: "data"},
+                                {data: "fone"},
+                                {data: "local_da_ocorrencia"},
+                                {data: "nome_do_hospital"}
+                            ]
+                        });
+                    }
                 }
             });
         }
+
+        $(".table").on("click", function(e){
+            var element = e.target
+            var parent = $(element).parent()
+            var children = $(parent).children()
+
+            var selecionadas = $(".selecionada")
+            console.log(selecionadas)
+            if(selecionadas.length > 0){
+            $(selecionadas).removeClass("selecionada")
+                $(selecionadas).css("background", "#fff")
+            }
+            $(children).addClass("selecionada")
+            $(children).css("background", "rgb(105, 105, 247)")
+
+        })
+
+        $(".table").on("dblclick", function(e){
+            var element = e.target
+            var parent = $(element).parent()
+            var idOcorrencia = $(parent).children(":first").text()
+            
+            window.location.href = "telaOcorrencia.php?ocorrenciaId=" + idOcorrencia
+        })
+
         $("#f_adicionar-bombeiro").on("click", function(){
-        window.location.href = "TelaCadastro.html"
-    })
+            window.location.href = "TelaCadastro.html"
+        })
     })
 </script>
 </html>

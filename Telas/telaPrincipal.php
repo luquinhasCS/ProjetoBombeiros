@@ -74,7 +74,7 @@
                 }
 
                 $fomrPartsJson = json_encode($form_parts);
-                $_SESSION["FORMPARTS"] = $fomrPartsJson
+                $_SESSION["FORMPARTS"] = $fomrPartsJson;
                 $db -> close();
             ?>
         </div>
@@ -130,12 +130,17 @@
             saveData()
         })
         $("#f_salvar").on("click", function(){
+            // saveData()
             $.ajax({
                 type: "POST",
                 url: "../php/dataSaver.php",
                 data: {},
                 success: function(response){
-                    console.log(`SaverResponse: ${response}`)
+                    console.log(response)
+                    window.location.href = "../Telas/telaCabecalho.php?ocorrenciaId=" + response;
+                },
+                error: function(response){
+                    console.error(response)
                 }
             });
         })
@@ -205,6 +210,10 @@
                             formPartData[formPartName][label] = element.value 
                         }
                     break
+                }
+                if (formPartData[formPartName] == []){
+                    var tamanho = formPartData.length() - 1
+                    formPartData.splice(tamanho)
                 }
             }
             

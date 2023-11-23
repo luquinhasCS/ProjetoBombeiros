@@ -82,44 +82,33 @@
         $("#f_cadastro").submit(function (event) {
             event.preventDefault();
             var dados = $(this).serialize();
-            var inputsVazios = $(this).find(":input").filter(function () {
-                return $(this).val() === "";
-            });
-            var body = $('body')
-            if ((inputsVazios.length - 1) > 0) {
-                for(var i = 0; i < inputsVazios.length - 1; i++){
-                    inputsVazios[i].style.backgroundColor= "#ff2e43"
-                    inputsVazios[i].style.borderRadius= "10px"
+            console.log(dados)
+            $.ajax({
+                type: "POST",
+                url: "../php/bombeiroCadastro.php",
+                data: dados,
+                dataType: 'json',
+                success: function(response){console.log(response)},
+                error: function (xhr, status, error, response) {
+                    console.error(response);
                 }
-            }
-            else {
-                $.ajax({
-                    type: "POST",
-                    url: "../php/bombeiroCadastro.php",
-                    data: dados,
-                    dataType: 'json',
-                    error: function (xhr, status, error) {
-                        console.error('Ocorreu um erro ao enviar os dados: ' + error);
-                    }
-                });
-                var email = $("#f_email")
-                var senha = $("#f_password")
-                var nome = $("#f_username")
-                var telefone = $("#f_telefone")
-                var cpf = $("#f_cpf")
-                var sexo = $("#f_sexo")
+            });
+            var email = $("#f_email")
+            var senha = $("#f_password")
+            var nome = $("#f_username")
+            var telefone = $("#f_telefone")
+            var cpf = $("#f_cpf")
+            var sexo = $("#f_sexo")
 
-                $(email).val("")
-                $(senha).val("")
-                $(nome).val("")
-                $(telefone).val("")
-                $(cpf).val("")
-                $(sexo).val("")
-                var alert = $(".alert")
-                $(alert).show()
-                setTimeout(function(){$(alert).hide()}, 1250)
-
-            };
+            $(email).val("")
+            $(senha).val("")
+            $(nome).val("")
+            $(telefone).val("")
+            $(cpf).val("")
+            $(sexo).val("")
+            var alert = $(".alert")
+            $(alert).show()
+            setTimeout(function(){$(alert).hide()}, 1250)
         });
         
         $("#f_voltar").on("click", function(){

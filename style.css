@@ -225,3 +225,7 @@ label:has([type="search"]){
 input:not([type="checkbox"]) {
     margin-bottom: 0 !important;
 }
+
+.selecionada{
+    background: rgb(105, 105, 247)
+}

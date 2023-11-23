@@ -2,10 +2,10 @@
 require "Db.php";
 $db = new db();
 
-$ocorrenciaId = $_GET["ocorrenciaId"];
-$data = date('d/m/Y');
+$ocorrenciaId = $_POST['f_ocorrenciaID'];
 $sexo = $_POST['f_sexo'];
 $nome_do_hospital = $_POST['f_nome_do_hospital'];
+$nome = $_POST['f_nome'];
 $idade = $_POST['f_idade'];
 $rg_cpf_paciente = $_POST['f_rg_cpf_paciente'];
 $acompanhante = $_POST['f_acompanhante'];
@@ -23,10 +23,11 @@ $cod_sia_sus = $_POST['f_cod_sia_sus'];
 
 $insertData = array(
     'ocorrencia_id' => $ocorrenciaId,
-    'data' => $data,
+    'data' => date('Y-m-d'),
     'sexo' => $sexo,
     'nome_do_hospital' => $nome_do_hospital,
     'idade' => $idade,
+    'nome' => $nome,
     'rg_cpf_paciente' => $rg_cpf_paciente,
     'acompanhante' => $acompanhante,
     'idade_acompanhante' => $idade_acompanhante,

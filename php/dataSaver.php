@@ -6,7 +6,7 @@ $db = new db();
 $formData = json_decode($_SESSION['formData'], true);
 
 if ($formData) {
-    $ocurrenceStructure = array('ocurrence_date' => date('d/m/Y'));
+    $ocurrenceStructure = array('ocurrence_date' => date('Y-m-d'));
     $newOccurence = $db->insert('ocorrencia', $ocurrenceStructure);
 
     foreach($formData as $formPartName => $formPartData){
@@ -25,6 +25,5 @@ if ($formData) {
 
 $_SESSION['formData'] = [];
 $db->close();
-header("Location: pathdoarquivo?ocorrenciaId=" . urlencode($newOccurence['id']));
-exit();                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+echo $newOccurence["id"];
 ?>

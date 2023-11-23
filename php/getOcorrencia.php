@@ -3,18 +3,45 @@
     $db = new db();
 
     $ocorrenciaId = $_POST['ocorrenciaId'];
-    $formparts = json_decode($_SESSION["FORMPARTS"]);
 
     $response = array();
+    $formparts = $db -> select (
+        $table = "botao",
+        $select = "*",
+        $condition = ""
+    ); 
 
-    foreach($formparts as $part){
-        $selectData = $db->select(
-            $table = $part,
-            $select = "*",
-            $condition = "where $part.ocorrencia_id = $ocorrenciaId"
-        );
-        $response[$part] = $selectData;
+    function removeAccents($str) {
+        return iconv('UTF-8', 'ASCII//TRANSLIT', $str);
+    }
+    
+    function toSnakeCase($inputString) {
+        // Remove accents
+        $withoutAccents = removeAccents($inputString);
+    
+        // Remove special characters and replace spaces with underscores
+        $formattedString = preg_replace('/[^a-zA-Z0-9\s]/', '', $withoutAccents);
+        $formattedString = preg_replace('/\s+/', '_', $formattedString);
+    
+        // Convert the string to lowercase
+        $snakeCaseString = strtolower($formattedString);
+    
+        // Remove leading and trailing underscores
+        $finalSnakeCase = trim($snakeCaseString, '_');
+    
+        return $finalSnakeCase;
     }
 
-    echo json_encode($response);
+    foreach($formparts as $part){
+        $label = toSnakeCase($part["label"]);
+        $condicao = "$label.ocorrencia_id = $ocorrenciaId";
+        $selectData = $db->select(
+            $table = $label,
+            $select = "*",
+            $condition = $condicao
+        );
+        $response[toSnakeCase($part["label"])] = $selectData;
+        echo json_encode($selectData);
+    };
+
 ?>

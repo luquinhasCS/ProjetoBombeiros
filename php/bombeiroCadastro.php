@@ -27,5 +27,7 @@ if ($db->insert('bombeiro', $insertData)) {
     echo "Ocorreu um erro no registro do bombeiro.";
 }
 
+echo $insertData;
+
 $db->close();
 ?>
