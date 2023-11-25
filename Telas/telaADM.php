@@ -51,7 +51,7 @@
         </ul>
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade" id="bombeiros" role="tabpanel" aria-labelledby="bombeiros-tab">
-                <table class="table table-sm table-stripped table-scroll">
+                <table class="table table-bombeiro table-sm table-stripped table-scroll">
                     <thead>
                         <tr>
                             <th>CPF</th>
@@ -66,7 +66,7 @@
                 </table>
             </div>
             <div class="tab-pane fade" id="ocorrencias" role="tabpanel" aria-labelledby="ocorrencias-tab">
-                <table class="table table-sm table-stripped  table-scroll">
+                <table class="table table-ocorrencia table-sm table-stripped  table-scroll">
                     <thead>
                         <tr>
                             <th>Id</th>
@@ -190,9 +190,13 @@
         $(".table").on("dblclick", function(e){
             var element = e.target
             var parent = $(element).parent()
-            var idOcorrencia = $(parent).children(":first").text()
-            
-            window.location.href = "telaOcorrencia.php?ocorrenciaId=" + idOcorrencia
+            var id = $(parent).children(":first").text()
+            var tabela = parent.parent().parent()
+            if($(tabela).hasClass("table-bombeiro")){
+                window.location.href = "telaBombeiro.php?id=" + id
+            } else if ($(tabela).hasClass("table-ocorrencia")){
+                window.location.href = "telaOcorrencia.php?id=" + id
+            }
         })
 
         $("#f_adicionar-bombeiro").on("click", function(){

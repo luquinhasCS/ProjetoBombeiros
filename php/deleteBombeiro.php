@@ -2,9 +2,9 @@
 require "Db.php";
 $db = new db();
 
-$bombeiroId = $_POST['bombeiroId'];
+$cpfBombeiro = $_POST['cpfBombeiro'];
 
-if ($db->delete('bombeiro', 'bombeiro.id = '$bombeiroId'')) {
+if ($db->delete('bombeiro', 'bombeiro.cpf = '$cpfBombeiro'')) {
     echo "Bombeiro deletado com sucesso!";
 } else {
     echo "Ocorreu um erro ao deletar o bombeiro.";

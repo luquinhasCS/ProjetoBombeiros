@@ -2,13 +2,15 @@
 require "Db.php";
 $db = new db();
 
-$bombeiroId = $_POST['bombeiroId'];
-$username = $_POST['f_username'];
-$email = $_POST['f_email'];
-$password = $_POST['f_password'];
-$telefone = $_POST['f_telefone'];
-$sexo = $_POST['f_sexo'];
-$cpf = $_POST['f_cpf'];
+parse_str($_POST['dataForm'], $dataForm);
+
+$bombeiroCPF = $_POST['cpfBombeiro'];
+$username = $dataForm["f_username"];
+$email = $dataForm["f_email"];
+$password = $dataForm["f_password"];
+$telefone = $dataForm["f_telefone"];
+$sexo = $dataForm["f_sexo"];
+$cpf = $dataForm["f_cpf"];
 
 $senha_criptografada = md5($password);
 
@@ -21,13 +23,13 @@ $insertData = array(
     'telefone' => $telefone
 );
 
-if ($db->update('bombeiro', $insertData, 'bombeiro.id = '$bombeiroId'')) {
+if ($db->update('bombeiro', $insertData, 'bombeiro.cpf = '.$bombeiroCPF.'')) {
     echo "Bombeiro alterado com sucesso!";
 } else {
     echo "Ocorreu um erro na alteração do bombeiro.";
 }
 
-echo $insertData;
+echo json_encode($dataForm["f_email"]);
 
 $db->close();
 ?>

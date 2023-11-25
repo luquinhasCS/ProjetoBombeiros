@@ -2,7 +2,7 @@
     require '../php/Db.php';
     $db = new db();
 
-    $ocorrenciaId = $_POST['ocorrenciaId'];
+    $ocorrenciaId = $_POST['id'];
 
     $response = array();
     $formparts = $db -> select (
@@ -13,7 +13,7 @@
 
     function removeAccents($str) {
         return iconv('UTF-8', 'ASCII//TRANSLIT', $str);
-    }
+    };
     
     function toSnakeCase($inputString) {
         // Remove accents
@@ -30,7 +30,7 @@
         $finalSnakeCase = trim($snakeCaseString, '_');
     
         return $finalSnakeCase;
-    }
+    };
 
     foreach($formparts as $part){
         $label = toSnakeCase($part["label"]);
@@ -40,11 +40,8 @@
             $select = "*",
             $condition = $condicao
         );
-        if (!$selectData){
-            $response[toSnakeCase($part["label"])] = $selectData;
-        } else {
-            $response[toSnakeCase($part["label"])] = {}
-        }
+        $response[toSnakeCase($part["label"])] = $selectData;
+
         echo json_encode($selectData);
     };
     echo json_encode($response);

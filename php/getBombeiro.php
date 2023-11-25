@@ -2,12 +2,12 @@
 require '../php/Db.php';
 $db = new db();
 
-$bombeiroId = $_POST['bombeiroId'];
+$cpfBombeiro = $_POST['cpfBombeiro'];
 
 $selectData = $db->select(
     $table = 'bombeiro',
     $select = "*",
-    $condition = "bombeiro.id = $bombeiroId"
+    $condition = "bombeiro.cpf = $cpfBombeiro"
 );
 
 echo json_encode($selectData);

@@ -23,7 +23,12 @@
         success: function(response){
             const bombeiroId = response
         }
-    });$.ajax({
+    });
+    
+    
+    
+    
+    $.ajax({
         type: "POST",
         url: "../php/updateBombeiro.php",
         data: {bombeiroId: variavelComOId},

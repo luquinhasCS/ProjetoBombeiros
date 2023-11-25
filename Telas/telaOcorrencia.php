@@ -29,7 +29,7 @@
 
 <div class="col-sm-12 m-3 dale">
 
-            <input type="hidden" name="f_ocorrenciaID" id="input" value="<?= $_GET["ocorrenciaId"]?>">
+            <input type="hidden" name="f_ocorrenciaID" id="input" value="<?= $_GET["id"]?>">
 
             <div class="col-sm-12 row" id="checkboxes">
             </div>
@@ -37,49 +37,51 @@
 
 <script>
     $(function(){
-
+        var ocorrenciaId = $("#input").val() 
         $.ajax({
         type: "POST",
         url: "../php/getOcorrencia.php",
-        data: {ocorrenciaId: $("#input").val()},
+        data: {id: ocorrenciaId},
         success: function(response){
+
             response.replace("[]", "")
-            var lista = JSON.parse(response)
-            
-            for (const key in lista) {
-                if (Object.hasOwnProperty.call(lista, key)) {
-                    var div = $("#checkboxes")
-                    var primeiroaDiv = $(".dale")
-                    const tables = lista[key][0];
-                    if (tables != undefined){
-                        const divAAdicionar = document.createElement("div");
 
-                        divAAdicionar.setAttribute("id", key)
-                        $(divAAdicionar).append("<h1>"+ titleCase(key) +"</h1")
-                        for (const prop in tables) {
-                        if (Object.hasOwnProperty.call(tables, prop)) {
-                            let checked = 0
-                            if (tables[prop] == 1){
-                                checked = 1
-                            }                            
-                            if (prop != "id"){
-                                if (prop != "ocorrencia_id"){
-                                    console.log(divAAdicionar)
-                                var dados = ("<div class='col-sm-12 form-check'>" +
-                                            "<label for='' class='form-check-label'>" + prop + "</label>" +
-                                            "<input type='checkbox' class='form-check-input' disabled id=''" + (checked ? "checked" : "") + ">" +
-                                          "</div>")
-                                        }
-                                        $(divAAdicionar).append(dados)
-                            }
-                        }
-                    }
-                $(div).append(divAAdicionar)
+            console.log(response)
+            // var lista = JSON.parse(response)
+            // for (const key in lista) {
+            //     if (Object.hasOwnProperty.call(lista, key)) {
+            //         var div = $("#checkboxes")
+            //         var primeiroaDiv = $(".dale")
+            //         const tables = lista[key][0];
+            //         if (tables != undefined){
+            //             const divAAdicionar = document.createElement("div");
 
-                    }
-                }
+            //             divAAdicionar.setAttribute("id", key)
+            //             $(divAAdicionar).append("<h1>"+ titleCase(key) +"</h1")
+            //             for (const prop in tables) {
+            //             if (Object.hasOwnProperty.call(tables, prop)) {
+            //                 let checked = 0
+            //                 if (tables[prop] == 1){
+            //                     checked = 1
+            //                 }                            
+            //                 if (prop != "id"){
+            //                     if (prop != "ocorrencia_id"){
+            //                         console.log(divAAdicionar)
+            //                     var dados = ("<div class='col-sm-12 form-check'>" +
+            //                                 "<label for='' class='form-check-label'>" + prop + "</label>" +
+            //                                 "<input type='checkbox' class='form-check-input' disabled id=''" + (checked ? "checked" : "") + ">" +
+            //                               "</div>")
+            //                             }
+            //                             $(divAAdicionar).append(dados)
+            //                 }
+            //             }
+            //         }
+            //     $(div).append(divAAdicionar)
 
-            }
+            //         }
+            //     }
+
+            // }
         }
     });
 
