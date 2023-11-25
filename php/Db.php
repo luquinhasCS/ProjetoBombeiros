@@ -72,6 +72,27 @@ class db {
         return $stmt->execute();
     }
 
+    public function describeTable($table) {
+        $query = "DESCRIBE $table";
+        $stmt = $this->pdo->prepare($query);
+
+        try {
+            $stmt->execute();
+
+            // Fetch column names and store in an array
+            $columnNames = array();
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $columnNames[] = $row['Field'];
+            }
+
+            return $columnNames;
+        } catch (PDOException $e) {
+            // If there's an error, you can handle it here
+            echo "Error describing table: " . $e->getMessage();
+            return null;
+        }
+    }
+
     public function close() {
         $this->pdo = null;
     }

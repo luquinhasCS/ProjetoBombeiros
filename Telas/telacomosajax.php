@@ -49,5 +49,12 @@
         success: function(response){
             console.log(response)
         }
+    }); $.ajax({
+        type: "POST",
+        url: "../php/deleteOcorrencia.php",
+        data: {ocorrenciaId: variavelComOId},
+        success: function(response){
+            console.log(response)
+        }
     });
 </script>
