@@ -28,7 +28,7 @@
                 <button class="btn btn-primary rounded-pill" style="border:solid 1px #fff!important" id="f_voltar">Voltar</button>
             </div>
             <div class="col-md-2">
-                <button class="btn btn-primary rounded-pill" style="border:solid 1px #fff!important" id="f_salvar">Excluir</button>
+                <button class="btn btn-primary rounded-pill delete-button" style="border:solid 1px #fff!important" id="f_excluir">Excluir</button>
             </div>
         </div>
     </nav>
@@ -56,7 +56,7 @@
                 </div>
                 <div class="col-md-12 mb-3">
                     <div class="form-floating">
-                        <input type="password" class="form-control" id="f_password" name="f_password" placeholder="Senha">
+                        <input type="password" class="form-control " id="f_password" name="f_password" placeholder="Senha">
                         <label for="f_password" class="form-label">Senha</label>
                     </div>
                 </div>
@@ -147,6 +147,9 @@
             });
 
             var alert = $(".alert")
+            var p = $(".alert-success > p")
+            $(p).text("Registro alterado com sucesso!")
+
             $(alert).show()
             setTimeout(function(){$(alert).hide()}, 1250)
         })
@@ -158,9 +161,16 @@
                 data: {cpfBombeiro: cpfBombeiro},
                 success: function(response){
                     console.log(response)
-
                 }
             });
+
+            var alert = $(".alert")
+            var p = $(".alert-success > p")
+            $(p).text("Registro deletado com sucesso!")
+
+            $(alert).show()
+            setTimeout(function(){$(alert).hide(); window.location.href = "telaadm.php"}, 1250)
+
         });
 
         $("#f_voltar").on("click", function(){

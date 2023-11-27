@@ -43,7 +43,7 @@
     <div class="col-md-12" style="margin-top: 5rem">
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
-                <button class="nav-link" id="bombeiros-tab" data-bs-toggle="tab" data-bs-target="#bombeiros" type="button" role="tab" aria-controls="bombeiros" aria-selected="true">Bombeiros</button>
+                <button class="nav-link active" id="bombeiros-tab" data-bs-toggle="tab" data-bs-target="#bombeiros" type="button" role="tab" aria-controls="bombeiros" aria-selected="true">Bombeiros</button>
             </li>
             <li class="nav-item" role="presentation">
                 <button class="nav-link" id="ocorrencias-tab" data-bs-toggle="tab" data-bs-target="#ocorrencias" type="button" role="tab" aria-controls="ocorrencias" aria-selected="false">Ocorrências</button>

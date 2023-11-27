@@ -18,7 +18,6 @@ if ($formData){
     if (!$ocorrenciaId){
         $ocurrenceStructure = array('ocurrence_date' => date('Y-m-d'));
         $newOccurence = $db->insert('ocorrencia', $ocurrenceStructure);
-        $
 
         foreach($formData as $formPartName => $formPartData){
             $insertData = array('ocorrencia_id' => $newOccurence['id']);
